@@ -1,0 +1,690 @@
+/* =========================================================
+   -1) FONTS
+   ========================================================= */
+
+@font-face {
+  font-family: "WarblerDeck";
+  src: url("fonts/WarblerDeck-Regular.woff2") format("woff2"),
+       url("fonts/WarblerDeck-Regular.woff") format("woff");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "WarblerDeck";
+  src: url("fonts/WarblerDeck-Bold.woff2") format("woff2"),
+       url("fonts/WarblerDeck-Bold.woff") format("woff");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "WarblerDeck";
+  src: url("fonts/WarblerDeck-Italic.woff2") format("woff2"),
+       url("fonts/WarblerDeck-Italic.woff") format("woff");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* =========================================================
+   0) COLOR SYSTEM
+   ========================================================= */
+
+:root {
+  --bg: #ffffff;
+  --fg: #111111;
+  --fg-muted: #555555;
+  --fg-faint: #666666;
+
+  --link: #0645ad;
+  --link-visited: #0b0080;
+
+  --border-soft: #cccccc;
+  --code-bg: #f4f4f4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f0f0f;
+    --fg: #e6e6e6;
+    --fg-muted: #aaaaaa;
+    --fg-faint: #999999;
+
+    --link: #9cf;
+    --link-visited: #dcf;
+
+    --border-soft: #cccccc;
+    --code-bg: #1a1a1a;
+  }
+}
+
+/* =========================================================
+   1) BASE RESET
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  font-family: "Atkinson Hyperlegible Next",
+               system-ui, -apple-system, BlinkMacSystemFont,
+               "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--fg);
+  background: var(--bg);
+}
+
+/* Readability for tablets / split screen */
+@media (max-width: 900px) {
+  body {
+    /* Don’t scale type up at tablet widths; it can feel oversized. */
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    /* Slight bump for small phones if desired */
+    font-size: 1.18rem;
+  }
+}
+
+/* =========================================================
+   2) STRUCTURAL BASELINE
+   ========================================================= */
+
+main {
+  max-width: 40rem;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+/* =========================================================
+   3) SITE CHROME
+   ========================================================= */
+
+.header-inner {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 0;
+
+  /* Keep title + caveat on one line and baseline-align their text */
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.site-title {
+  font-family: "WarblerDeck", Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.site-title {
+  font-family: "WarblerDeck", Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.site-caveat {
+  margin-top: 0;
+  text-align: right;
+  font-family: "WarblerDeck", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.8rem; /* smaller than nav (0.9rem) */
+  color: var(--fg-muted);
+  letter-spacing: 0.01em;
+}
+nav {
+  margin: 3rem auto 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+nav a {
+  color: var(--fg-muted);
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  margin: 4rem auto 2rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--fg-faint);
+}
+
+footer {
+  margin: 4rem auto 2rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--fg-faint);
+}
+
+.feed-links {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  color: var(--fg-muted);
+}
+
+.feed-links a {
+  color: var(--link);
+}
+/* =========================================================
+   4) READING CONTEXT
+   ========================================================= */
+
+.reading p {
+  margin: 1.7rem 0;
+}
+
+.reading ul,
+.reading ol {
+  margin: 1.2rem 0 1.2rem 1.25rem;
+}
+
+.reading ul,
+.reading ol {
+  margin: 1.2rem 0 1.2rem 1.25rem;
+}
+
+/* Ordered-list numbers + punctuation (marker) in Warbler */
+ol ::marker {
+  font-family: "WarblerDeck", Georgia, serif;
+}
+.reading blockquote {
+  margin: 1.6rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--border-soft);
+  color: var(--fg-muted);
+}
+
+/* =========================================================
+   5) HEADINGS
+   ========================================================= */
+
+h1, h2, h3 {
+  font-family: "WarblerDeck", Georgia, serif;
+  font-weight: 400;
+}
+
+h1 {
+  font-size: 2rem;
+  line-height: 1.25;
+  margin: 0 0 1rem;
+}
+
+/* Center the first heading on non-pamphlet pages (static pages + index/listing pages).
+   Pamphlet pages keep their own title styling. */
+body:not(:has(.pamphlet)) main > h1:first-child {
+  text-align: center;
+}
+h2 {
+  font-size: 1.35rem;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+h3 {
+  font-size: 1.15rem;
+  margin-top: 2.25rem;
+  margin-bottom: 0.5rem;
+}
+
+/* =========================================================
+   6) PAMPHLETS
+   ========================================================= */
+
+.pamphlet-header h1 {
+  text-align: left;
+}
+
+.pamphlet-title {
+  font-size: 1.85rem;
+  font-weight: 700;
+}
+
+.pamphlet-meta {
+  margin-top: 0.75rem;
+  margin-left: 0.75rem;
+  font-size: 0.95em;
+}
+
+.pamphlet-author {
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+}
+
+/* =========================================================
+   7) SITE PAGE TITLES
+   ========================================================= */
+
+.home-masthead h1,
+.home-masthead h2 {
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+.home-masthead h1,
+.home-masthead h2 {
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* Home subtitle styling */
+.home-masthead h2 {
+  font-style: italic;
+  font-family: "WarblerDeck", Georgia, serif;
+  font-weight: 400;
+}
+/* =========================================================
+   8) LINKS + CODE
+   ========================================================= */
+
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+.site-title,
+.site-title:visited,
+.site-title:hover {
+  color: var(--fg);
+  text-decoration: none;
+}
+
+code {
+  background: var(--code-bg);
+  padding: 0.15rem 0.3rem;
+  border-radius: 3px;
+  font-size: 0.95em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+/* =========================================================
+   9) BROWSE / TOC (RESPONSIVE GRID OF TABLE ROWS)
+   ========================================================= */
+
+/*
+  Two-column TOC where each column is a real HTML <table>.
+  - On small screens: tables stack.
+  - On larger screens: tables sit side-by-side.
+  - Rows line up horizontally because each column is a table with equal row heights.
+*/
+.toc-2col {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  /* When the two tables stack vertically, keep the transition tight so it
+     doesn't read like extra line spacing between the last and first items. */
+  row-gap: 0.25rem;
+  column-gap: 2.5rem;
+}
+
+@media (min-width: 48rem) {
+  .toc-2col {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+
+    /* Restore a more comfortable inter-column (horizontal) + inter-row (vertical)
+       rhythm once we're in true 2-column mode. */
+    row-gap: 0.75rem;
+  }
+}
+.toc-col {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.toc-col .toc-item {
+  /* keep row spacing similar to the old list row-gap */
+}
+
+.toc-cell {
+  padding: 0.3rem 0;
+  vertical-align: baseline;
+}
+
+/* Make the link act like a 3-cell row without nesting another table */
+.toc-2col .toc-link {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: 0.5rem;
+  width: 100%;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.toc-2col .toc-label {
+  font-family: "WarblerDeck", Georgia, serif;
+
+  /* Slightly smaller to prevent long domain labels from colliding with leaders/counts */
+  font-size: 1.1rem;
+  line-height: 1.15;
+
+  /* Keep long domain labels on one line (counts stay aligned). */
+  white-space: nowrap;
+  min-width: 0;
+}
+.toc-2col a.toc-link[href] .toc-label {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+.toc-2col .toc-leader {
+  /* Period-style (dot) leaders */
+  border-bottom: 0;
+  height: 0.55em;
+
+  /* Dots inherit the current text color so they work in light/dark mode */
+  background-image: radial-gradient(circle, currentColor 1px, transparent 1.6px);
+  /* 3× wider spacing between dots */
+  background-size: 1.65em 0.55em;
+  background-repeat: repeat-x;
+  background-position: 0 78%;
+
+  /* Prevent the last dot from being clipped at the right edge */
+  padding-right: 0.55em;
+
+  color: var(--fg-muted);
+}
+.toc-2col .toc-count {
+  font-family: "WarblerDeck", Georgia, serif;
+  font-size: 1.25rem;
+  color: var(--fg-muted);
+  white-space: nowrap;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+
+  /* Keep leader→count spacing equal to the grid gap (label→leader) */
+  margin-left: 0;
+  padding-left: 0.5rem;
+}
+.browse {
+  /* Keep the divider line, but tighten the whitespace around it */
+  margin: 2rem 0 2rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-soft);
+}
+
+.toc-divider {
+  position: relative;
+  margin: 4rem 0 3rem;
+  height: 0;
+}
+
+.toc-divider::before {
+  content: "";
+  display: block;
+  border-top: 2px solid var(--border-soft);
+  margin-bottom: 0.25rem;
+}
+
+.toc-divider::after {
+  content: "";
+  display: block;
+  border-top: 1px solid var(--border-soft);
+}
+
+
+.toc {
+  margin-bottom: 2.5rem;
+}
+
+.toc-heading {
+  font-family: "WarblerDeck", Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/*
+  Layout rule:
+  - Page layout uses a grid.
+  - Row alignment uses tables.
+  - Columns change ONLY at CSS breakpoints (no auto-fit/auto-fill flow).
+*/
+.toc-list {
+  --toc-gap-x: 2.5rem;
+  --toc-gap-y: 0.6rem;
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: grid;
+  grid-template-columns: 1fr; /* default: 1 column */
+  column-gap: var(--toc-gap-x);
+  row-gap: var(--toc-gap-y);
+}
+
+/* Breakpoint-controlled columns (example: 1 → 2) */
+@media (min-width: 48rem) {
+  .toc-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.toc-item {
+  margin: 0;
+  min-width: 0;
+}
+
+/* ROW = TABLE (label · leader · count) */
+.toc-link {
+  /* works for both <a> and <div class="toc-link is-disabled"> */
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+
+  text-decoration: none;
+  color: var(--fg);
+}
+
+.toc-label,
+.toc-leader,
+.toc-count {
+  display: table-cell;
+  vertical-align: baseline;
+}
+
+/* Label */
+.toc-label {
+  font-family: "WarblerDeck", Georgia, serif;
+  font-size: 1.35rem;
+  line-height: 1.05;
+
+  /* spacing before leaders */
+  padding-right: 0.5rem;
+
+  /* allow wrapping without forcing horizontal overflow */
+  width: 100%;
+}
+
+/* Only underline when the TOC row is an actual clickable link */
+a.toc-link[href] .toc-label {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+/* Leaders (dotted fill) */
+.toc-leader {
+  /* The leader cell expands/shrinks between label and count */
+  width: 100%;
+  border-bottom: 0;
+
+  /* spacing around leaders */
+  padding: 0 0.5rem;
+
+  /* Period-style (dot) leaders */
+  height: 0.55em;
+  background-image: radial-gradient(currentColor 1.25px, transparent 1.35px);
+  background-size: 0.55em 0.55em;
+  background-repeat: repeat-x;
+  background-position: 0 78%;
+
+  /*
+    Keep a consistent visual gap on BOTH sides of the leader:
+    - 0.5rem matches the label→leader gap
+    - +0.25em is a small anti-clipping buffer so you don't see “half dots”
+  */
+  padding-right: calc(0.5rem + 0.25em);
+
+  color: var(--fg-muted);
+}
+/* Count */
+.toc-count {
+  font-family: "WarblerDeck", Georgia, serif;
+  font-size: 1.25rem;
+  color: var(--fg-muted);
+  white-space: nowrap;
+  text-decoration: none;
+  text-align: right;
+
+  /* keep counts consistently aligned, but allow longer meta like "Domain, 1820" */
+  width: 1%;
+  font-variant-numeric: tabular-nums;
+
+  /* Keep spacing symmetric: label→leader gap equals leader→count gap */
+  position: static;
+}/* Period-ish “none” marker: an em rule, not a modern hyphen */
+.toc-zero {
+  display: inline-block;
+  font-weight: 700;
+  letter-spacing: 0; /* keep it solid, like an em rule */
+  transform: translateY(-0.03em); /* optical centering with the dotted leader */
+}
+
+/* Kill visited styling in TOC */
+.toc-link:visited .toc-label,
+.toc-link:visited .toc-count {
+  color: inherit;
+}
+
+/* Kill visited styling in TOC */
+.toc-link:visited .toc-label,
+.toc-link:visited .toc-count {
+  color: inherit;
+}
+
+/* =========================================================
+   10) PAMPHLET LIST ROWS (TITLE + META LINE)
+   ========================================================= */
+
+/* Pamphlet lists should NOT look like TOCs.
+   Keep markup as-is, but render each pamphlet row as a simple 2-line entry
+   in the body font, with normal line spacing and a bit more space between items. */
+
+/* Extra space between pamphlets in the list */
+.toc-2col tr.toc-item:has(.toc-link.has-meta) .toc-cell {
+  padding: 0.55rem 0;
+}
+
+/* Make the pamphlet link a normal block, not a TOC grid row */
+.toc-2col .toc-link.has-meta {
+  display: block;
+  width: 100%;
+
+  /* inherit body font (not Warbler) */
+  font-family: inherit;
+  color: inherit;
+
+  text-decoration: none;
+}
+
+/* Title line: body font, normal line height */
+.toc-2col .toc-link.has-meta .toc-label {
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+/* Ensure the title is always on its own line (meta starts on the next line) */
+.toc-2col .toc-link.has-meta .toc-title {
+  display: block;
+}
+/* Underline only the title text, like a normal link */
+.toc-2col a.toc-link.has-meta[href] .toc-label {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+/* Meta/details line: same body font, slightly smaller, normal spacing */
+.toc-2col .toc-link.has-meta .toc-meta {
+  margin-top: 0.25rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--fg-muted);
+}
+
+/* Meta author should not be small-caps/letterspaced */
+.toc-2col .toc-link.has-meta .toc-meta .toc-author {
+  font-variant: normal;
+  letter-spacing: normal;
+}
+
+
+/* HR */
+
+hr {
+  display: block;
+  border: none;
+  height: 0;
+  padding-top: 3px;            /* THIS creates separation */
+  margin: 3rem 0;
+  border-top: 2px solid var(--fg-muted);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+hr::before,
+hr::after {
+  content: "";
+  display: block;
+}
+
+hr::before {
+  border-top: 2px solid var(--border-soft);
+  margin-bottom: 0.25rem;
+}
+
+hr::after {
+  border-top: 1px solid var(--border-soft);
+}
+

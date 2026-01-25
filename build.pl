@@ -1,4 +1,7 @@
 #!/usr/bin/env perl
+
+# Pamphletariat website build script
+
 use strict;
 use warnings;
 use utf8;

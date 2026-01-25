@@ -426,7 +426,11 @@ pre {
 }
 .toc-2col .toc-count {
   font-family: "WarblerDeck", Georgia, serif;
-  font-size: 1.25rem;
+
+  /* Match the label size in the same TOC row */
+  font-size: 1.1rem;
+  line-height: 1.15;
+
   color: var(--fg-muted);
   white-space: nowrap;
   text-align: right;
@@ -435,8 +439,7 @@ pre {
   /* Keep leader→count spacing equal to the grid gap (label→leader) */
   margin-left: 0;
   padding-left: 0.5rem;
-}
-.browse {
+}.browse {
   /* Keep the divider line, but tighten the whitespace around it */
   margin: 2rem 0 2rem;
   padding-top: 0.75rem;

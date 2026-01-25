@@ -1143,8 +1143,10 @@ sub render_index_landing {
     my $left  = join "\n", @rows[0 .. ($half - 1)];
     my $right = join "\n", @rows[$half .. $#rows];
 
+    my $heading = ($name eq "authors") ? "<h1>Authors</h1>\n" : "";
+
     return qq{
-<div class="toc-2col" role="navigation" aria-label="Browse $name">
+$heading<div class="toc-2col" role="navigation" aria-label="Browse $name">
   <table class="toc-col" role="presentation">
 $left
   </table>
@@ -1154,8 +1156,7 @@ $right
   </table>
 </div>
 };
-}sub render_index_page {
-    my ($label, $items, %opts) = @_;
+}sub render_index_page {    my ($label, $items, %opts) = @_;
 
     # Optional feed metadata
     my $feed_base  = $opts{feed_base}  // ""; # e.g. "/subjects/foo" (without extension)

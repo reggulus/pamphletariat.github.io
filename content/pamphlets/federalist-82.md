@@ -51,5 +51,4 @@ But could an appeal be made to lie from the State courts to the subordinate fede
 PUBLIUS
 
 1. No. 31.
-
 2. Sec. 8, Art. 1.

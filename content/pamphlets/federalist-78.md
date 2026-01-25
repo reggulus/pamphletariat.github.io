@@ -81,7 +81,5 @@ Upon the whole, there can be no room to doubt that the convention acted wisely i
 PUBLIUS
 
 1. The celebrated Montesquieu, speaking of them, says: "Of the three powers above mentioned, the judiciary is next to nothing."—Spirit of Laws. Vol. I, page 186.
-
 2. Idem, page 181.
-
 3. Vide Protest of the Minority of the Convention of Pennsylvania, Martin's Speech, etc.

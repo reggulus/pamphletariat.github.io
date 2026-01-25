@@ -59,7 +59,5 @@ The President of the United States would be an officer elected by the people for
 PUBLIUS
 
 1. A writer in a Pennsylvania paper, under the signature of TAMONY, has asserted that the king of Great Britain owes his prerogative as commander-in-chief to an annual mutiny bill. The truth is, on the contrary, that his prerogative, in this respect, is immemorial, and was only disputed, "contrary to all reason and precedent," as Blackstone vol. i., page 262, expresses it, by the Long Parliament of Charles I. but by the statute the 13th of Charles II., chap. 6, it was declared to be in the king alone, for that the sole supreme government and command of the militia within his Majesty's realms and dominions, and of all forces by sea and land, and of all forts and places of strength, EVER WAS AND IS the undoubted right of his Majesty and his royal predecessors, kings and queens of England, and that both or either house of Parliament cannot nor ought to pretend to the same.
-
 2. Vide Blackstone's Commentaries, Vol I., p. 257.
-
 3. Candor, however, demands an acknowledgment that I do not think the claim of the governor to a right of nomination well founded. Yet it is always justifiable to reason from the practice of a government, till its propriety has been constitutionally questioned. And independent of this claim, when we take into view the other considerations, and pursue them through all their consequences, we shall be inclined to draw much the same conclusion.

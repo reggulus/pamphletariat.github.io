@@ -77,23 +77,13 @@ So far is the general sense of mankind from corresponding with the tenets of tho
 PUBLIUS
 
 1. Aspasia, vide "Plutarch's Life of Pericles."
-
 2. Ibid.
-
 3. Ibid.
-
 4. Ibid. Phidias was supposed to have stolen some public gold, with the connivance of Pericles, for the embellishment of the statue of Minerva.
-
 5. Worn by the popes.
-
 6. Madame de Maintenon.
-
 7. Duchess of Marlborough.
-
 8. Madame de Pompadour.
-
 9. The League of Cambray, comprehending the Emperor, the King of France, the King of Aragon, and most of the Italian princes and states.
-
 10. The Duke of Marlborough.
-
 11. Vide "Principes des Negociations" par l'Abbé de Mably.

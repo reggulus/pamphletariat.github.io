@@ -58,5 +58,4 @@ The probability of incompatible alliances between the different States or confed
 PUBLIUS
 
 1. Divide and command.
-
 2. In order that the whole subject of these papers may as soon as possible be laid before the public, it is proposed to publish them four times a week—on Tuesday in the New York Packet and on Thursday in the Daily Advertiser.

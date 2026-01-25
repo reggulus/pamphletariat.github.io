@@ -74,5 +74,4 @@ The sum of what has been here advanced and proved is, that the charge against th
 PUBLIUS
 
 1. Connecticut and Rhode Island.
-
 2. Declaration of Independence.

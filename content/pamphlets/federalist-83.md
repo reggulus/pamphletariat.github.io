@@ -113,7 +113,5 @@ It certainly sounds not a little harsh and extraordinary to affirm that there is
 PUBLIUS
 
 1. It has been erroneously insinuated with regard to the court of chancery, that this court generally tries disputed facts by a jury. The truth is, that references to a jury in that court rarely happen, and are in no case necessary but where the validity of a devise of land comes into question.
-
 2. It is true that the principles by which that relief is governed are now reduced to a regular system; but it is not the less true that they are in the main applicable to SPECIAL circumstances, which form exceptions to general rules.
-
 3. Vide No. 81, in which the supposition of its being abolished by the appellate jurisdiction in matters of fact being vested in the Supreme Court, is examined and refuted.

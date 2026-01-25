@@ -75,9 +75,6 @@ It has not a little contributed to the infirmities of the existing federal syste
 PUBLIUS
 
 1. This, as nearly as I can recollect, was the sense of his speech on introducing the last bill.
-
 2. Encyclopedia, article "Empire."
-
 3. New Hampshire, Rhode Island, New Jersey, Delaware, Georgia, South Carolina, and Maryland are a majority of the whole number of the States, but they do not contain one third of the people.
-
 4. Add New York and Connecticut to the foregoing seven, and they will be less than a majority.

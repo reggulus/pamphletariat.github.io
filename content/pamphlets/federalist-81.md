@@ -83,9 +83,6 @@ The amount of the observations hitherto made on the authority of the judicial de
 PUBLIUS
 
 1. Article 3, Sec. 1.
-
 2. This power has been absurdly represented as intended to abolish all the county courts in the several States, which are commonly called inferior courts. But the expressions of the Constitution are, to constitute "tribunals INFERIOR TO THE SUPREME COURT"; and the evident design of the provision is to enable the institution of local courts, subordinate to the Supreme, either in States or larger districts. It is ridiculous to imagine that county courts were in contemplation.
-
 3. This word is composed of JUS and DICTIO, juris dictio or a speaking and pronouncing of the law.
-
 4. I hold that the States will have concurrent jurisdiction with the subordinate federal judicatories, in many cases of federal cognizance, as will be explained in my next paper.

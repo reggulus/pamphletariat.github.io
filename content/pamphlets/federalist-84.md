@@ -86,9 +86,6 @@ The result from these observations is that the sources of additional expense fro
 PUBLIUS
 
 1. Vide Blackstone's Commentaries, Vol. 1, p. 136.
-
 2. Idem, Vol. 4, p. 438.
-
 3. To show that there is a power in the Constitution by which the liberty of the press may be affected, recourse has been had to the power of taxation. It is said that duties may be laid upon the publications so high as to amount to a prohibition. I know not by what logic it could be maintained, that the declarations in the State constitutions, in favor of the freedom of the press, would be a constitutional impediment to the imposition of duties upon publications by the State legislatures. It cannot certainly be pretended that any degree of duties, however low, would be an abridgment of the liberty of the press. We know that newspapers are taxed in Great Britain, and yet it is notorious that the press nowhere enjoys greater liberty than in that country. And if duties of any kind may be laid without a violation of that liberty, it is evident that the extent must depend on legislative discretion, respecting the liberty of the press, will give it no greater security than it will have without them. The same invasions of it may be effected under the State constitutions which contain those declarations through the means of taxation, as under the proposed Constitution, which has nothing of the kind. It would be quite as significant to declare that government ought to be free, that taxes ought not to be excessive, etc., as that the liberty of the press ought not to be restrained.
-
 4. Vide Rutherford's Institutes, Vol. 2, Book II, Chapter X, Sections XIV and XV. Vide also Grotius, Book II, Chapter IX, Sections VIII and IX.

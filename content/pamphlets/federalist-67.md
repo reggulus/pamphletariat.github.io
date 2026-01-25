@@ -59,5 +59,4 @@ I have taken the pains to select this instance of misrepresentation, and to plac
 PUBLIUS
 
 1. See CATO, No. V.
-
 2. Article I, section 3, clause 1.

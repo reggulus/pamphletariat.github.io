@@ -22,6 +22,9 @@ my $OUT_DIR     = "dist";
 
 my @ASSET_DIRS = ("css", "img");
 
+# Extra deploy artifacts that must be present in the published output.
+my $DOWNLOADS_DIR = "content/download";
+my $CNAME_FILE    = "CNAME";
 
 # Fixed list of domains.
 # Changes only slowly over time.
@@ -94,8 +97,18 @@ sub copy_assets {
         next unless -d $dir;
         copy_tree($dir, "$OUT_DIR/$dir");
     }
-}
 
+    # Copy downloads to a stable public path: /download/...
+    if (-d $DOWNLOADS_DIR) {
+        copy_tree($DOWNLOADS_DIR, "$OUT_DIR/download");
+    }
+
+    # Preserve GitHub Pages custom domain configuration.
+    if (-f $CNAME_FILE) {
+        copy($CNAME_FILE, "$OUT_DIR/CNAME")
+          or die "Copy $CNAME_FILE -> $OUT_DIR/CNAME failed: $!";
+    }
+}
 sub load_pamphlets {
     die "Missing content dir: $CONTENT_DIR\n" unless -d $CONTENT_DIR;
 

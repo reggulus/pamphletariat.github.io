@@ -22,16 +22,16 @@ orientation: This is just a simple test pamphlet signifying nothing as a test. N
 public_domain: false
 
 response_to:
-  - "federalist-1"
-  - "federalist-2"	
-  - "federalist-3"
-  - "federalist-52"
+  - federalist-1
+  - federalist-2	
+  - federalist-3
+  - federalist-52
 
 related:
-  - "federalist-4"
-  - "federalist-5"
-  - "federalist-83"
-  - "federalist-59"
+  - federalist-4
+  - federalist-5
+  - federalist-83
+  - federalist-59
 ---
 
 ## The Issue

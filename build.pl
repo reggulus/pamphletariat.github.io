@@ -452,7 +452,7 @@ sub parse_pamphlet {
     my $fm_start = -1;
     my $fm_end   = -1;
     for (my $i = 0; $i <= $#lines; $i++) {
-        if ($lines[$i] eq "---") {
+        if ($lines[$i] =~ /^\s*---\s*\z/) {
             $fm_start = $i;
             last;
         }
@@ -460,20 +460,23 @@ sub parse_pamphlet {
     die "Missing frontmatter start delimiter (---) in $path\n" if $fm_start < 0;
 
     for (my $j = $fm_start + 1; $j <= $#lines; $j++) {
-        if ($lines[$j] eq "---") {
+        if ($lines[$j] =~ /^\s*---\s*\z/) {
             $fm_end = $j;
             last;
         }
     }
-    die "Missing frontmatter end delimiter (---) in $path\n" if $fm_end < 0;
-
-    my @fm_lines = @lines[ ($fm_start + 1) .. ($fm_end - 1) ];
+    die "Missing frontmatter end delimiter (---) in $path\n" if $fm_end < 0;    my @fm_lines = @lines[ ($fm_start + 1) .. ($fm_end - 1) ];
     my $body = join("\n", @lines[ ($fm_end + 1) .. $#lines ]);
 
     # YAML parsing (template-driven, minimal subset):
     # - scalars: key: value (single line)
     # - lists: key: then subsequent "- item" lines
     # - comments: lines beginning with "#" inside frontmatter are ignored
+    #
+    # IMPORTANT: this parser is intentionally forgiving.
+    # Unknown keys and minor formatting issues should not fatally break the build.
+    # We warn and skip unparseable lines, but we still enforce required fields and
+    # validate required values later.
     my %m;
     my %is_list = map { $_ => 1 } qw(related_domains geography response_to related);
 
@@ -481,7 +484,7 @@ sub parse_pamphlet {
         my $line = $fm_lines[$i];
 
         next if !defined $line;
-        next if $line =~ /^#/;          # comment lines
+        next if $line =~ /^\s*#/;       # comment lines (allow leading whitespace)
         next if $line =~ /^\s*$/;       # ignore blank lines
 
         # key: value
@@ -495,34 +498,44 @@ sub parse_pamphlet {
                 while ($j <= $#fm_lines) {
                     my $l = $fm_lines[$j];
                     last if !defined $l;
-                    last if $l =~ /^#/;                 # comment breaks list
-                    last if $l =~ /^\s*$/;             # blank breaks list
+                    last if $l =~ /^\s*#/;              # comment breaks list
+                    last if $l =~ /^\s*$/;              # blank breaks list
                     last if $l =~ /^[A-Za-z0-9_]+:\s*/; # next key breaks list
 
                     if ($l =~ /^\s*-\s*(.*)\z/) {
                         my $x = $1;
-                        # preserve entry as an opaque string; only strip surrounding quotes
+                        # Preserve entry as an opaque string; strip surrounding quotes,
+                        # then normalize leading/trailing whitespace (protect against trailing tabs/spaces).
                         if ($x =~ /^"(.*)"\z/ || $x =~ /^'(.*)'\z/) { $x = $1; }
+                        $x =~ s/^\s+|\s+$//g;
                         push @vals, $x;
                         $j++;
                         next;
                     }
 
                     # Any other non-key, non-dash line is invalid in this limited YAML subset.
-                    die "Invalid frontmatter list item syntax in $path near: $l\n";
+                    # Forgiving behavior: warn and stop the list; do not kill the build.
+                    my $fm_line_no = ($fm_start + 1) + $j;
+                    warn "WARN: Invalid frontmatter list item syntax in $path at frontmatter line $fm_line_no; skipping remainder of list for '$k' near: $l\n";
+                    last;
                 }
                 $m{$k} = \@vals;
                 $i = $j - 1;
                 next;
             }
 
-            # Scalar value: preserve exactly (except strip surrounding quotes)
+            # Scalar value: strip surrounding quotes, then normalize leading/trailing whitespace
+            # (protect against accidental trailing tabs/spaces even in quoted strings).
             if ($v =~ /^"(.*)"\z/ || $v =~ /^'(.*)'\z/) { $v = $1; }
+            $v =~ s/^\s+|\s+$//g;
 
             # public_domain must be boolean true/false only if present
             if ($k eq "public_domain") {
-                die "Invalid public_domain (must be true/false) in $path\n"
-                  unless ($v eq "true" || $v eq "false");
+                if (!($v eq "true" || $v eq "false")) {
+                    my $fm_line_no = ($fm_start + 1) + $i;
+                    warn "WARN: Invalid public_domain (must be true/false) in $path at frontmatter line $fm_line_no; ignoring value '$v'\n";
+                    next;
+                }
                 $m{$k} = ($v eq "true") ? 1 : 0;
                 next;
             }
@@ -531,9 +544,11 @@ sub parse_pamphlet {
             next;
         }
 
-        die "Invalid frontmatter syntax in $path near: $line\n";
+        # Forgiving behavior: warn and skip any unparseable line.
+        my $fm_line_no = ($fm_start + 1) + $i;
+        warn "WARN: Invalid/unsupported frontmatter syntax in $path at frontmatter line $fm_line_no; skipping line: $line\n";
+        next;
     }
-
     # Required fields (fatal if missing or invalid)
     # NOTE: `slug` is not required in frontmatter; it is generated solely from the filename.
     for my $req (qw(title author_namespace author date domain subject reading_level)) {
@@ -1718,11 +1733,11 @@ sub emit_static_pages {
 
                 # Frontmatter only if it starts the file
                 # (supported for both .md and .html)
-                if ($raw =~ /\A---\n(.*?)\n---\n(.*)\z/s) {
+                # Be tolerant of CRLF and trailing whitespace on delimiter lines.
+                $raw =~ s/\r\n?/\n/g;
+                if ($raw =~ /\A\s*---\s*\n(.*?)\n\s*---\s*\n(.*)\z/s) {
                     my $meta_raw = $1;
-                    $body        = $2;
-
-                    for my $line (split /\n/, $meta_raw) {
+                    $body        = $2;                    for my $line (split /\n/, $meta_raw) {
                         next unless $line =~ /^(\w+):\s*(.*)$/;
                         my ($k, $v) = ($1, $2);
                         $v =~ s/^\s+|\s+$//g;

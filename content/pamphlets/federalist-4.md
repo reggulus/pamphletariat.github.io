@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 4"
-slug: "federalist-4"
+
 author_namespace: historical
 author: Publius
 date: 1787-11-07

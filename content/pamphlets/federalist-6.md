@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 6"
-slug: "federalist-6"
+
 author_namespace: historical
 author: Publius
 date: 1787-11-14

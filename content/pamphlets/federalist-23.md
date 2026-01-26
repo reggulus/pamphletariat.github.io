@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 23"
-slug: "federalist-23"
+
 author_namespace: historical
 author: Publius
 date: 1787-12-18

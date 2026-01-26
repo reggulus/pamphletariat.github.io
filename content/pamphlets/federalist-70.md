@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 70"
-slug: "federalist-70"
+
 author_namespace: historical
 author: Publius
 date: 1788-03-15

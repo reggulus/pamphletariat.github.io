@@ -1,6 +1,6 @@
 ---
 title: "Centinel 14"
-slug: "centinel-xiv"
+
 author_namespace: historical
 author: Brutus
 date: 1788-02-05

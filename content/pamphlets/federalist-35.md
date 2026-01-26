@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 35"
-slug: "federalist-35"
+
 author_namespace: historical
 author: Publius
 date: 1788-01-05

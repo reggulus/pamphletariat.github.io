@@ -1,6 +1,6 @@
 ---
 title: "Brutus 1"
-slug: "brutus-i"
+
 author_namespace: historical
 author: Brutus
 date: 1787-10-18

@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 3"
-slug: "federalist-3"
+
 author_namespace: historical
 author: Publius
 date: 1787-11-03

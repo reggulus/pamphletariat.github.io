@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 11"
-slug: "federalist-11"
+
 author_namespace: historical
 author: Publius
 date: 1787-11-24

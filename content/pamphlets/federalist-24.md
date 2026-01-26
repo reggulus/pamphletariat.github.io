@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 24"
-slug: "federalist-24"
+
 author_namespace: historical
 author: Publius
 date: 1787-12-19

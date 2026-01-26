@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 2"
-slug: "federalist-2"
+
 author_namespace: historical
 author: Publius
 date: 1787-10-31

@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 33"
-slug: "federalist-33"
+
 author_namespace: historical
 author: Publius
 date: 1788-01-02

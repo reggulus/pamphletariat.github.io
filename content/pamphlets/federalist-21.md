@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 21"
-slug: "federalist-21"
+
 author_namespace: historical
 author: Publius
 date: 1787-12-12

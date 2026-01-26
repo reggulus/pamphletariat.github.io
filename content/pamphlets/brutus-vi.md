@@ -1,6 +1,6 @@
 ---
 title: "Brutus 6"
-slug: "brutus-vi"
+
 author_namespace: historical
 author: Brutus
 date: 1787-12-27

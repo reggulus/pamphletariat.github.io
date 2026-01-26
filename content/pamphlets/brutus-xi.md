@@ -1,6 +1,6 @@
 ---
 title: "Brutus 11"
-slug: "brutus-xi"
+
 author_namespace: historical
 author: Brutus
 date: 1788-01-31

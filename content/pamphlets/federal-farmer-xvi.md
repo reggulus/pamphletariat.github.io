@@ -1,6 +1,6 @@
 ---
 title: "Federal Farmer 16"
-slug: "federal-farmer-xvi"
+
 author_namespace: historical
 author: Federal Farmer
 date: 1788-01-23

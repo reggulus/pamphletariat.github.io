@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 45"
-slug: "federalist-45"
+
 author_namespace: historical
 author: Publius
 date: 1788-01-26

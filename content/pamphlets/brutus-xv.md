@@ -1,6 +1,6 @@
 ---
 title: "Brutus 15"
-slug: "brutus-xv"
+
 author_namespace: historical
 author: Brutus
 date: 1788-03-20

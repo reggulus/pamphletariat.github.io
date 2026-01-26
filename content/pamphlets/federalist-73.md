@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 73"
-slug: "federalist-73"
+
 author_namespace: historical
 author: Publius
 date: 1788-03-21

@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 1"
-slug: "federalist-1"
+
 author_namespace: historical
 author: Publius
 date: 1787-10-27

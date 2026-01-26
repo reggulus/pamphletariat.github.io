@@ -1,6 +1,6 @@
 ---
 title: "Brutus XIV (Part 1)"
-slug: "brutus-xiv-part-1"
+
 author_namespace: historical
 author: Brutus
 date: 1788-02-28

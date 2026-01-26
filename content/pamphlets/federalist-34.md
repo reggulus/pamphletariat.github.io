@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 34"
-slug: "federalist-34"
+
 author_namespace: historical
 author: Publius
 date: 1788-01-05

@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 60"
-slug: "federalist-60"
+
 author_namespace: historical
 author: Publius
 date: 1788-02-23

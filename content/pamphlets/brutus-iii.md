@@ -1,6 +1,6 @@
 ---
 title: "Brutus 3"
-slug: "brutus-iii"
+
 author_namespace: historical
 author: Brutus
 date: 1787-11-15

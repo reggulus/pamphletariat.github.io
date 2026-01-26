@@ -1,6 +1,6 @@
 ---
 title: "Centinel 2"
-slug: "centinel-ii"
+
 author_namespace: historical
 author: Centinel
 date: 1787-10-24

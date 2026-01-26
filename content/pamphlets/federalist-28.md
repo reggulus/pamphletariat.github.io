@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 28"
-slug: "federalist-28"
+
 author_namespace: historical
 author: Publius
 date: 1787-12-26

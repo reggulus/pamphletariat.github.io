@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 76"
-slug: "federalist-76"
+
 author_namespace: historical
 author: Publius
 date: 1788-04-01

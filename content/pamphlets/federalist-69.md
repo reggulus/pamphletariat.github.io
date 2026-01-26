@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 69"
-slug: "federalist-69"
+
 author_namespace: historical
 author: Publius
 date: 1788-03-14

@@ -1,6 +1,6 @@
 ---
 title: "Centinel 3"
-slug: "centinel-iii"
+
 author_namespace: historical
 author: Brutus
 date: 1787-11-08

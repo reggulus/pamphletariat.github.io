@@ -1,6 +1,6 @@
 ---
 title: "Federal Farmer 8"
-slug: "federal-farmer-viii"
+
 author_namespace: historical
 author: Federal Farmer
 date: 1788-01-03

@@ -1,6 +1,6 @@
 ---
 title: "Centinel 9"
-slug: "centinel-ix"
+
 author_namespace: historical
 author: Brutus
 date: 1788-01-08

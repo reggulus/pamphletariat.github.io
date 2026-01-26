@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 8"
-slug: "federalist-8"
+
 author_namespace: historical
 author: Publius
 date: 1787-11-20

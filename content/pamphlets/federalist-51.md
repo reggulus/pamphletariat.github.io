@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 51"
-slug: "federalist-51"
+
 author_namespace: historical
 author: Publius
 date: 1788-02-06

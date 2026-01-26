@@ -1,6 +1,6 @@
 ---
 title: "Federal Farmer 3"
-slug: "federal-farmer-iii"
+
 author_namespace: historical
 author: Federal Farmer
 date: 1787-10-10

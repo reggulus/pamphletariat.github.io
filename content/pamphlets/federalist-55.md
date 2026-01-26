@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 55"
-slug: "federalist-55"
+
 author_namespace: historical
 author: Publius
 date: 1788-02-13

@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 42"
-slug: "federalist-42"
+
 author_namespace: historical
 author: Publius
 date: 1788-01-22

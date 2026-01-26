@@ -1,6 +1,6 @@
 ---
 title: "Brutus 2"
-slug: "brutus-ii"
+
 author_namespace: historical
 author: Brutus
 date: 1787-11-01

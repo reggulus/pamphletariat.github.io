@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 18"
-slug: "federalist-18"
+
 author_namespace: historical
 author: Publius
 date: 1787-12-07

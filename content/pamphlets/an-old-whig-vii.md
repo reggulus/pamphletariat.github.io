@@ -1,6 +1,6 @@
 ---
 title: "An Old Whig VII"
-slug: "an-old-whig-vii"
+
 author_namespace: historical
 author: An Old Whig
 date: 1787-11-28

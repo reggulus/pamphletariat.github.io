@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 52"
-slug: "federalist-52"
+
 author_namespace: historical
 author: Publius
 date: 1788-02-08

@@ -1,6 +1,6 @@
 ---
 title: "Cato No. 5"
-slug: "cato-v"
+
 author_namespace: historical
 author: Cato
 date: 1787-11-22

@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 62"
-slug: "federalist-62"
+
 author_namespace: historical
 author: Publius
 date: 1788-02-27

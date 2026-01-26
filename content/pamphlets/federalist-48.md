@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 48"
-slug: "federalist-48"
+
 author_namespace: historical
 author: Publius
 date: 1788-02-01

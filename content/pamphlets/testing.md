@@ -1,6 +1,6 @@
 ---
 title: Can Independent Thought Affect Public Policy?
-slug: can-thought-affect-policy
+
 author_namespace: testing
 author: Brutus
 date: 2026-01-19

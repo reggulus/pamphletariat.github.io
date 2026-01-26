@@ -1,6 +1,6 @@
 ---
 title: "Cato VII"
-slug: "cato-vii"
+
 author_namespace: historical
 author: Cato
 date: 1788-01-03

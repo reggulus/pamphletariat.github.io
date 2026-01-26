@@ -1,6 +1,6 @@
 ---
 title: "Centinel 10"
-slug: "centinel-x"
+
 author_namespace: historical
 author: Centinel
 date: 1788-01-12

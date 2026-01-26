@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 82"
-slug: "federalist-82"
+
 author_namespace: historical
 author: Publius
 date: 1788-05-28

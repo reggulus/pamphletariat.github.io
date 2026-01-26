@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 5"
-slug: "federalist-5"
+
 author_namespace: historical
 author: Publius
 date: 1787-11-10

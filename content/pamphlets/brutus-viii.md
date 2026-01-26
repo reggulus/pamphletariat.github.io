@@ -1,6 +1,6 @@
 ---
 title: "Brutus 8"
-slug: "brutus-viii"
+
 author_namespace: historical
 author: Brutus
 date: 1788-01-10

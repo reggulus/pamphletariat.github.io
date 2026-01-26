@@ -535,19 +535,18 @@ sub parse_pamphlet {
     }
 
     # Required fields (fatal if missing or invalid)
-    for my $req (qw(title slug author_namespace author date domain subject reading_level)) {
+    # NOTE: `slug` is not required in frontmatter; it is generated solely from the filename.
+    for my $req (qw(title author_namespace author date domain subject reading_level)) {
         die "Missing required frontmatter field '$req' in $path\n"
           if !exists($m{$req});
     }
-    for my $req (qw(title slug author_namespace author date domain subject reading_level)) {
+    for my $req (qw(title author_namespace author date domain subject reading_level)) {
         die "Empty required frontmatter field '$req' in $path\n"
           if (!defined($m{$req}) || $m{$req} eq "");
     }
 
     # Validation rules
-    die "Invalid slug (must be lowercase and match [a-z0-9-]+) in $path\n"
-      unless ($m{slug} =~ /^[a-z0-9-]+\z/);
-
+    # (Frontmatter `slug`, if present, is ignored; output slug comes from filename.)
     die "Invalid date (must be YYYY-MM-DD) in $path\n"
       unless ($m{date} =~ /^\d{4}-\d{2}-\d{2}\z/);
 
@@ -1080,8 +1079,8 @@ sub render_pamphlet {
     my @meta_bits;
 
     # Domain · Subject · Reader (single-line header-style meta)
-    # NEW DIRECTIVE: remove "Domain:" and "Subject:" labels.
-    # Desired: "Domain · Subject · General reader" (one line layout like author/date).
+    # This must be a separate paragraph, not part of the <br>-joined meta block.
+    my $header_meta_html = "";
     my @header_bits;
 
     # Domain (linkable)
@@ -1108,8 +1107,11 @@ sub render_pamphlet {
     }
 
     if (@header_bits) {
-        push @meta_bits, qq{<p><span class="meta-field">} . join(" &middot; ", @header_bits) . qq{</span></p><hr>};
+        $header_meta_html = qq{\n  <p class="meta meta-header"><span class="meta-field">}
+          . join(" &middot; ", @header_bits)
+          . qq{</span></p>\n  <hr>};
     }
+
     # Source (display verbatim)
     # NEW DIRECTIVE: pamphlet source should just say "Source:"
     # and it should draw above the reading level.
@@ -1135,8 +1137,10 @@ sub render_pamphlet {
         $line .= $pd_html if ($pd_html ne "" && $source_html eq "");
         push @meta_bits, qq{<span class="meta-field">$line</span>};
     }
+
     # Reading level
     # USER REQUEST: remove the "General Reading Level" line entirely.
+
     # Geography (list; linkable to geography index pages)
     if ($p->{geography} && ref($p->{geography}) eq "ARRAY" && @{ $p->{geography} }) {
         my @items = map {
@@ -1183,6 +1187,7 @@ sub render_pamphlet {
             push @meta_bits, qq{<span class="meta-field"><span class="meta-label">Responding to:</span> } . join(", ", @items) . qq{</span>};
         }
     }
+
     # Related pamphlets (list; pamphlet slugs; linkable)
     # USER REQUEST: add these links in the pamphlet header just above the reader warning.
     # NEW DIRECTIVE: link text should be the pamphlet titles (slug is not human readable).
@@ -1201,10 +1206,10 @@ sub render_pamphlet {
             push @meta_bits, qq{<span class="meta-field"><span class="meta-label">Related:</span> } . join(", ", @items) . qq{</span>};
         }
     }
-    my $extra_meta = @meta_bits
-      ? ("\n  <p class=\"meta meta-extra\">" . join("<br>\n", @meta_bits) . "</p>")
-      : "";
 
+    my $extra_meta = @meta_bits
+      ? ($header_meta_html . "\n  <p class=\"meta meta-extra\">" . join("<br>\n", @meta_bits) . "</p>")
+      : $header_meta_html;
     # Reader warning (optional): render in italics above the <hr> when present.
     # NEW DIRECTIVE: reader warning needs a label "Note: ".
     my $reader_warning_html = "";

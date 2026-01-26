@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 20"
-slug: "federalist-20"
+
 author_namespace: historical
 author: Publius
 date: 1787-12-11

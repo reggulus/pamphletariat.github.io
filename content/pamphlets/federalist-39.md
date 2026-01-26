@@ -1,6 +1,6 @@
 ---
 title: "The Federalist No. 39"
-slug: "federalist-39"
+
 author_namespace: historical
 author: Publius
 date: 1788-01-16

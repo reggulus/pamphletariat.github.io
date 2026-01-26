@@ -1,6 +1,6 @@
 ---
 title: "Federal Farmer 2"
-slug: "federal-farmer-ii"
+
 author_namespace: historical
 author: Federal Farmer
 date: 1787-10-09

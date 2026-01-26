@@ -1,6 +1,6 @@
 ---
 title: "Centinel 8"
-slug: "centinel-viii"
+
 author_namespace: historical
 author: Centinel
 date: 1787-12-29

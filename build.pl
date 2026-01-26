@@ -440,187 +440,161 @@ sub parse_pamphlet {
     open my $fh, "<:encoding(UTF-8)", $path or die "Open $path: $!";
     my $raw = do { local $/; <$fh> };
 
-    # Parse YAML-ish frontmatter.
-    # Supported formats:
-    #   ---\nkey: value\n---\nBody
-    # Also tolerates files that omit the leading '---' (legacy).
-    my ($meta, $body);
-    if ($raw =~ /\A---\n(.*?)\n---\n(.*)\z/s) {
-        $meta = $1;
-        $body = $2;
-    } else {
-        ($meta, $body) = split /\n---\n/, $raw, 2
-          or die "Missing frontmatter separator in $path\n";
-    }
+    # Slug is authoritative from filename (NEW DIRECTIVE).
+    # Frontmatter may contain its own required `slug` field, which is validated
+    # per spec but is NOT used for output paths/URLs.
+    my ($file_slug) = $path =~ m{/([^/]+)\.md$};
+    $file_slug //= "untitled";
 
+    # FRONTMATTER BOUNDARIES (authoritative): YAML between the first two lines containing only "---".
+    # Everything before the first --- and after the second --- is NOT frontmatter.
+    my @lines = split /\n/, ($raw // ""), -1;
+    my $fm_start = -1;
+    my $fm_end   = -1;
+    for (my $i = 0; $i <= $#lines; $i++) {
+        if ($lines[$i] eq "---") {
+            $fm_start = $i;
+            last;
+        }
+    }
+    die "Missing frontmatter start delimiter (---) in $path\n" if $fm_start < 0;
+
+    for (my $j = $fm_start + 1; $j <= $#lines; $j++) {
+        if ($lines[$j] eq "---") {
+            $fm_end = $j;
+            last;
+        }
+    }
+    die "Missing frontmatter end delimiter (---) in $path\n" if $fm_end < 0;
+
+    my @fm_lines = @lines[ ($fm_start + 1) .. ($fm_end - 1) ];
+    my $body = join("\n", @lines[ ($fm_end + 1) .. $#lines ]);
+
+    # YAML parsing (template-driven, minimal subset):
+    # - scalars: key: value (single line)
+    # - lists: key: then subsequent "- item" lines
+    # - comments: lines beginning with "#" inside frontmatter are ignored
     my %m;
+    my %is_list = map { $_ => 1 } qw(related_domains geography response_to related);
 
-    # Frontmatter parsing
-    # Supports:
-    #   subjects: Foo              (single string)
-    #   subjects: Foo, Bar         (comma list)
-    #   subjects: [Foo, Bar]       (inline YAML list)
-    #   subjects:\n- Foo\n- Bar    (dash list; indented or not)
-    #
-    # Also accepts singular aliases:
-    #   subject: Foo
-    #   geography: Foo
-    #
-    # NOTE: Allow YAML keys with hyphens (e.g., "subject-tags") by accepting
-    # [A-Za-z0-9_-] and normalizing '-' to '_' for internal matching.
-    my @meta_lines = split /\n/, $meta;
-    for (my $i = 0; $i <= $#meta_lines; $i++) {
-        my $line = $meta_lines[$i];
+    for (my $i = 0; $i <= $#fm_lines; $i++) {
+        my $line = $fm_lines[$i];
 
-        next unless $line =~ /^([A-Za-z0-9_-]+):\s*(.*)$/;
-        my ($k_raw, $v) = ($1, $2);
-        my $k = $k_raw;
-        $k =~ s/-/_/g; # normalize for internal field names
+        next if !defined $line;
+        next if $line =~ /^#/;          # comment lines
+        next if $line =~ /^\s*$/;       # ignore blank lines
 
-        # normalize common aliases
-        $k = "subjects"   if $k eq "subject";
-        $k = "geography"  if $k eq "geographies";
+        # key: value
+        if ($line =~ /^([A-Za-z0-9_]+):\s*(.*)\z/) {
+            my ($k, $v) = ($1, $2);
 
-        $v =~ s/^\s+|\s+$//g;
+            # List field: key: (empty) followed by dash items
+            if ($is_list{$k} && $v eq "") {
+                my @vals;
+                my $j = $i + 1;
+                while ($j <= $#fm_lines) {
+                    my $l = $fm_lines[$j];
+                    last if !defined $l;
+                    last if $l =~ /^#/;                 # comment breaks list
+                    last if $l =~ /^\s*$/;             # blank breaks list
+                    last if $l =~ /^[A-Za-z0-9_]+:\s*/; # next key breaks list
 
-        my $is_list_key = ($k eq "subjects" || $k eq "geography");
+                    if ($l =~ /^\s*-\s*(.*)\z/) {
+                        my $x = $1;
+                        # preserve entry as an opaque string; only strip surrounding quotes
+                        if ($x =~ /^"(.*)"\z/ || $x =~ /^'(.*)'\z/) { $x = $1; }
+                        push @vals, $x;
+                        $j++;
+                        next;
+                    }
 
-        # Dash list (key with empty value, followed by "- item" lines).
-        # Accept both indented and flush-left dash lists.
-        if ($is_list_key && $v eq "") {
-            my @vals;
-            my $j = $i + 1;
-            while ($j <= $#meta_lines) {
-                my $l = $meta_lines[$j];
-
-                # If we hit another key, stop.
-                last if $l =~ /^([A-Za-z0-9_-]+):\s*/;
-
-                # list item: "- Value" or "  - Value" or "\t- Value"
-                if ($l =~ /^\s*-\s*(.*)$/) {
-                    my $x = $1;
-                    $x =~ s/^\s+|\s+$//g;
-                    $x =~ s/^"(.*)"$/$1/;
-                    $x =~ s/^'(.*)'$/$1/;
-                    push @vals, $x if defined($x) && $x ne "";
-                    $j++;
-                    next;
+                    # Any other non-key, non-dash line is invalid in this limited YAML subset.
+                    die "Invalid frontmatter list item syntax in $path near: $l\n";
                 }
-
-                # allow blank lines inside list; stop on first non-list content
-                last if $l !~ /^\s*$/;
-                $j++;
+                $m{$k} = \@vals;
+                $i = $j - 1;
+                next;
             }
 
-            $m{$k} = \@vals;
-            $i = $j - 1; # advance outer loop to last consumed line
-            next;
-        }
+            # Scalar value: preserve exactly (except strip surrounding quotes)
+            if ($v =~ /^"(.*)"\z/ || $v =~ /^'(.*)'\z/) { $v = $1; }
 
-        # Inline YAML list format: subjects: [Foo, Bar]
-        if ($is_list_key && $v =~ /^\[(.*)\]$/) {
-            my $inner = $1;
-            my @vals = map {
-                my $x = $_;
-                $x =~ s/^\s+|\s+$//g;
-                $x =~ s/^"(.*)"$/$1/;
-                $x =~ s/^'(.*)'$/$1/;
-                $x;
-            } grep { defined($_) && $_ ne "" } split /\s*,\s*/, $inner;
-            $m{$k} = \@vals;
-            next;
-        }
-
-        # Strip quotes for scalar values
-        if ($v =~ /^"(.*)"$/ || $v =~ /^'(.*)'$/) {
-            $v = $1;
-        }
-
-        if ($is_list_key) {
-            # If it contains commas, treat as a comma-list; otherwise treat as a single item.
-            my @vals;
-            if ($v =~ /,/) {
-                @vals = map {
-                    my $x = $_;
-                    $x =~ s/^\s+|\s+$//g;
-                    $x =~ s/^"(.*)"$/$1/;
-                    $x =~ s/^'(.*)'$/$1/;
-                    $x;
-                } grep { defined($_) && $_ ne "" } split /\s*,\s*/, $v;
-            } else {
-                my $x = $v;
-                $x =~ s/^\s+|\s+$//g;
-                $x =~ s/^"(.*)"$/$1/;
-                $x =~ s/^'(.*)'$/$1/;
-                @vals = ( $x ) if defined($x) && $x ne "";
+            # public_domain must be boolean true/false only if present
+            if ($k eq "public_domain") {
+                die "Invalid public_domain (must be true/false) in $path\n"
+                  unless ($v eq "true" || $v eq "false");
+                $m{$k} = ($v eq "true") ? 1 : 0;
+                next;
             }
-            $m{$k} = \@vals;
-        } else {
+
             $m{$k} = $v;
+            next;
         }
+
+        die "Invalid frontmatter syntax in $path near: $line\n";
     }
-    my ($slug) = $path =~ m{/([^/]+)\.md$};
-    $slug //= "untitled";
-    $m{title}  //= $slug;
-    $m{author} //= "Anonymous";
-    $m{domain} //= "Uncategorized";
 
-    $m{title}  //= $slug;
-    $m{author} //= "Anonymous";
-    $m{domain} //= "Uncategorized";
+    # Required fields (fatal if missing or invalid)
+    for my $req (qw(title slug author_namespace author date domain subject reading_level)) {
+        die "Missing required frontmatter field '$req' in $path\n"
+          if !exists($m{$req});
+    }
+    for my $req (qw(title slug author_namespace author date domain subject reading_level)) {
+        die "Empty required frontmatter field '$req' in $path\n"
+          if (!defined($m{$req}) || $m{$req} eq "");
+    }
 
-    $m{title}  //= $slug;
-    $m{author} //= "Anonymous";
-    $m{domain} //= "Uncategorized";
+    # Validation rules
+    die "Invalid slug (must be lowercase and match [a-z0-9-]+) in $path\n"
+      unless ($m{slug} =~ /^[a-z0-9-]+\z/);
 
-    $m{title}  //= $slug;
-    $m{author} //= "Anonymous";
-    $m{domain} //= "Uncategorized";
+    die "Invalid date (must be YYYY-MM-DD) in $path\n"
+      unless ($m{date} =~ /^\d{4}-\d{2}-\d{2}\z/);
+
+    die "Invalid reading_level (must be general|advanced) in $path\n"
+      unless ($m{reading_level} eq "general" || $m{reading_level} eq "advanced");
+
+    # domain must exactly match an allowed domain label
+    die "Invalid domain '$m{domain}' in $path (not in allowed domain labels)\n"
+      unless exists $DOMAINS{$m{domain}};
+
+    # Optional scalar: missing and empty are equivalent
+    if (exists $m{reader_warning} && (!defined($m{reader_warning}) || $m{reader_warning} eq "")) {
+        delete $m{reader_warning};
+    }
+
+    # Optional list fields: if missing or empty, treat as empty list.
+    for my $k (qw(related_domains geography response_to related)) {
+        if (!exists $m{$k} || !defined $m{$k}) {
+            $m{$k} = [];
+            next;
+        }
+        if (ref($m{$k}) eq "ARRAY") {
+            # present but empty => empty list (already)
+            next;
+        }
+        # If present as scalar, it's invalid per spec (arrays of strings only)
+        die "Invalid frontmatter field '$k' (must be a YAML list of strings) in $path\n";
+    }
+
+    # Year derived from strict date
+    my ($year) = $m{date} =~ /^(\d{4})-/;
+    $m{year} = $year;
 
     # Author identity
-    # - author: display label
-    # - author_namespace: disambiguator (e.g., "historical", "github")
-    # - author_id: canonical ID used for author pages and feeds
-    $m{author_namespace} //= "default";
     $m{author_namespace} =~ s/^\s+|\s+$//g;
-    $m{author}           =~ s/^\s+|\s+$//g if defined $m{author};
-    $m{author_id}        = ($m{author_namespace} // "default") . ":" . ($m{author} // "Anonymous");
-    # Canonicalize domains to avoid case/whitespace mismatches (e.g., "politics" vs "Politics").
-    # Keep display-friendly Title Case while still slugifying for URLs later.
-    if (defined $m{domain}) {
-        $m{domain} =~ s/^\s+|\s+$//g;
-        $m{domain} =~ s/\s+/ /g;
-        $m{domain} = join " ", map { ucfirst(lc($_)) } split /\s+/, $m{domain};
-    }
-
-    if (defined $m{domain}) {
-        $m{domain} =~ s/^\s+|\s+$//g;
-        $m{domain} =~ s/\s+/ /g;
-        $m{domain} = join " ", map { ucfirst(lc($_)) } split /\s+/, $m{domain};
-    }
-
-    # Domain validation: warn (but do not abort) if a pamphlet uses a domain
-    # not present in the fixed %DOMAINS list.
-    if (defined $m{domain} && $m{domain} ne "" && !exists $DOMAINS{$m{domain}}) {
-        warn "Warning: $path uses unknown domain '$m{domain}' (not in %DOMAINS); continuing build.\n";
-    }    if ($m{date} && $m{date} =~ /^(\d{4})-/) {
-        $m{year} = $1;
-    } else {
-        $m{year} = "Unknown";
-    }
-
-    $m{subjects}  ||= [];
-    $m{geography} ||= [];
+    $m{author}           =~ s/^\s+|\s+$//g;
+    $m{author_id}        = $m{author_namespace} . ":" . $m{author};
 
     return {
         %m,
-        slug => $slug,
+        # Output slug is from filename (NEW DIRECTIVE)
+        slug => $file_slug,
         era  => era_for_year($m{year}),
         body => md_to_html($body),
-        url  => "/pamphlets/$slug.html",
+        url  => "/pamphlets/$file_slug.html",
     };
-}
-sub safe_year {
+}sub safe_year {
     my ($y) = @_;
     return ($y && $y =~ /^\d{4}$/) ? $y : 0;
 }

@@ -8,8 +8,7 @@ date: 1788-01-09
 era: historical
 
 domain: Law & Constitution
-subject:
-  - US Constitution
+subject: US Constitution
 
 reading_level: advanced
 reader_warning: ""

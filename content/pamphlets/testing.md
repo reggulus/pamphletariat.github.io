@@ -3,11 +3,11 @@ title: Can Independent Thought Affect Public Policy?
 slug: can-thought-affect-policy
 author_namespace: testing
 author: Brutus
-date: 2026-1-19
+date: 2026-01-19
 
 era: contemporary
 
-domain: Public Policy
+domain: Belief & Axioms
 subject: Public Policy
 
 reading_level: general

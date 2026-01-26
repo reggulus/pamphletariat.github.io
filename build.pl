@@ -563,6 +563,10 @@ sub parse_pamphlet {
         delete $m{reader_warning};
     }
 
+    # Optional scalar: missing and empty are equivalent
+    if (exists $m{abstract} && (!defined($m{abstract}) || $m{abstract} eq "")) {
+        delete $m{abstract};
+    }
     # Optional list fields: if missing or empty, treat as empty list.
     for my $k (qw(related_domains geography response_to related)) {
         if (!exists $m{$k} || !defined $m{$k}) {
@@ -1161,14 +1165,44 @@ sub render_pamphlet {
         }
     }
 
-    # Response to (list; display verbatim; no URL scheme defined)
+    # Response to (list; pamphlet slugs; linkable)
+    # USER REQUEST: add these links in the pamphlet header just above the reader warning.
+    # NEW DIRECTIVE: link text should be the pamphlet titles (slug is not human readable).
     if ($p->{response_to} && ref($p->{response_to}) eq "ARRAY" && @{ $p->{response_to} }) {
-        my @items = map { html_escape($_) } grep { defined($_) && $_ ne "" } @{ $p->{response_to} };
+        my %title_for_slug = map { ($_->{slug} // "") => ($_->{title} // "") } @pamphlets;
+
+        my @items = map {
+            my $slug = $_;
+            my $title = $title_for_slug{$slug} // "";
+            my $label = html_escape(($title ne "") ? $title : ($slug // ""));
+            my $href  = "/pamphlets/" . html_escape($slug // "") . ".html";
+            qq{<a href="$href">$label</a>}
+        } grep { defined($_) && $_ ne "" } @{ $p->{response_to} };
+
         if (@items) {
-            push @meta_bits, qq{<span class="meta-field"><span class="meta-label">Response to:</span> } . join(", ", @items) . qq{</span>};
+            # NEW DIRECTIVE: there should be an <hr> just above Responding to
+            push @meta_bits, qq{<hr>};
+            push @meta_bits, qq{<span class="meta-field"><span class="meta-label">Responding to:</span> } . join(", ", @items) . qq{</span>};
         }
     }
+    # Related pamphlets (list; pamphlet slugs; linkable)
+    # USER REQUEST: add these links in the pamphlet header just above the reader warning.
+    # NEW DIRECTIVE: link text should be the pamphlet titles (slug is not human readable).
+    if ($p->{related} && ref($p->{related}) eq "ARRAY" && @{ $p->{related} }) {
+        my %title_for_slug = map { ($_->{slug} // "") => ($_->{title} // "") } @pamphlets;
 
+        my @items = map {
+            my $slug = $_;
+            my $title = $title_for_slug{$slug} // "";
+            my $label = html_escape(($title ne "") ? $title : ($slug // ""));
+            my $href  = "/pamphlets/" . html_escape($slug // "") . ".html";
+            qq{<a href="$href">$label</a>}
+        } grep { defined($_) && $_ ne "" } @{ $p->{related} };
+
+        if (@items) {
+            push @meta_bits, qq{<span class="meta-field"><span class="meta-label">Related:</span> } . join(", ", @items) . qq{</span>};
+        }
+    }
     my $extra_meta = @meta_bits
       ? ("\n  <p class=\"meta meta-extra\">" . join("<br>\n", @meta_bits) . "</p>")
       : "";
@@ -1180,17 +1214,24 @@ sub render_pamphlet {
         my $rw = html_escape($p->{reader_warning});
         $reader_warning_html = qq{\n  <p class="meta meta-reader-warning"><em>Note: $rw</em></p>};
     }
+
+    # Abstract (optional): paragraph immediately after reader warning on pamphlets.
+    my $abstract_html = "";
+    if (defined($p->{abstract}) && $p->{abstract} ne "") {
+        my $ab = html_escape($p->{abstract});
+        $abstract_html = qq{\n  <p class="meta meta-abstract">$ab</p>};
+    }
+
     return qq{
 <article class="pamphlet">
   <h1>$p->{title}</h1>
-  <p class="meta">$author_html · $year</p>$extra_meta$reader_warning_html
+  <p class="meta">$author_html · $year</p>$extra_meta$reader_warning_html$abstract_html
   <hr>
   <div class="pamphlet-body">
 $p->{body}
   </div>
 </article>
-};
-}sub render_index_landing {
+};}sub render_index_landing {
     my ($name, $keys) = @_;
 
     # Special handling for authors:

@@ -7,13 +7,12 @@ date: 2026-01-19
 
 era: contemporary
 
-domain: Belief & Axioms
+domain: Power & Institutions
 subject: Public Policy
 
 reading_level: general
-reader_warning: ""
+reader_warning: "This is extremely boring."
 
-source: "Project Gutenberg"
 public_domain: false
 
 related:

@@ -1065,19 +1065,132 @@ sub render_pamphlet {
     my $author_href = html_escape(author_page_href($p));
     my $author_html = qq{<a class="author-link" href="$author_href">$author_text</a>};
 
-    my $year = html_escape($p->{year} // "");
+    # Pamphlet header should show a human-readable date.
+    my $when = html_escape(format_month_year($p->{date}, ($p->{year} // "")));
 
+    # Keep a local variable declared under strict (prevents the global symbol error).
+    # Prefer the formatted date for display; fall back to year if needed.
+    my $year = $when ne "" ? $when : html_escape($p->{year} // "");
+
+    # Additional metadata (only render if present; values verbatim)
+    my @meta_bits;
+
+    # Domain · Subject · Reader (single-line header-style meta)
+    # NEW DIRECTIVE: remove "Domain:" and "Subject:" labels.
+    # Desired: "Domain · Subject · General Reader" (one line layout like author/date).
+    my @header_bits;
+
+    # Domain (linkable)
+    if (defined($p->{domain}) && $p->{domain} ne "") {
+        my $label = html_escape($p->{domain});
+        my $href  = "/domains/" . slugify($p->{domain}) . ".html";
+        push @header_bits, qq{<a href="$href">$label</a>};
+    }
+
+    # Subject (linkable)
+    if (defined($p->{subject}) && $p->{subject} ne "") {
+        my $label = html_escape($p->{subject});
+        my $href  = "/subjects/" . slugify($p->{subject}) . ".html";
+        push @header_bits, qq{<a href="$href">$label</a>};
+    }
+
+    # Reader label (derived from reading_level)
+    if (defined($p->{reading_level}) && $p->{reading_level} ne "") {
+        my $v = lc($p->{reading_level});
+        my $reader = ($v eq "general")  ? "General Reader"
+                   : ($v eq "advanced") ? "Advanced Reader"
+                   : "";
+        push @header_bits, html_escape($reader) if $reader ne "";
+    }
+
+    if (@header_bits) {
+        push @meta_bits, qq{<span class="meta-field">} . join(" &middot; ", @header_bits) . qq{</span>};
+    }
+    # Source (display verbatim)
+    # NEW DIRECTIVE: pamphlet source should just say "Source:"
+    # and it should draw above the reading level.
+    # USER REQUEST: on the pamphlet header put a dot and then the public domain phrase just after the source on one line.
+    my $source_html = "";
+    if (defined($p->{source}) && $p->{source} ne "") {
+        my $label = html_escape($p->{source});
+        $source_html = qq{<span class="meta-label">Source:</span> $label};
+    }
+
+    # Public domain notice: only print when it is explicitly true.
+    # NEW DIRECTIVE: if it is public domain it should just say "Public Domain"
+    # and it should draw above the reading level.
+    # (Do not print anything for false/missing to avoid implying public-domain status.)
+    my $pd_html = "";
+    if (exists $p->{public_domain} && $p->{public_domain}) {
+        $pd_html = qq{Public Domain};
+    }
+
+    if ($source_html ne "" || $pd_html ne "") {
+        my $line = $source_html;
+        $line .= " &middot; $pd_html" if ($pd_html ne "" && $source_html ne "");
+        $line .= $pd_html if ($pd_html ne "" && $source_html eq "");
+        push @meta_bits, qq{<span class="meta-field">$line</span>};
+    }
+    # Reading level
+    # USER REQUEST: remove the "General Reading Level" line entirely.
+    # Geography (list; linkable to geography index pages)
+    if ($p->{geography} && ref($p->{geography}) eq "ARRAY" && @{ $p->{geography} }) {
+        my @items = map {
+            my $v = $_;
+            my $label = html_escape($v // "");
+            my $href  = "/geography/" . slugify($v // "") . ".html";
+            qq{<a href="$href">$label</a>}
+        } grep { defined($_) && $_ ne "" } @{ $p->{geography} };
+
+        if (@items) {
+            push @meta_bits, qq{<span class="meta-field"><span class="meta-label">Geography:</span> } . join(", ", @items) . qq{</span>};
+        }
+    }
+
+    # Related domains (list; linkable)
+    if ($p->{related_domains} && ref($p->{related_domains}) eq "ARRAY" && @{ $p->{related_domains} }) {
+        my @items = map {
+            my $v = $_;
+            my $label = html_escape($v // "");
+            my $href  = "/domains/" . slugify($v // "") . ".html";
+            qq{<a href="$href">$label</a>}
+        } grep { defined($_) && $_ ne "" } @{ $p->{related_domains} };
+
+        if (@items) {
+            push @meta_bits, qq{<span class="meta-field"><span class="meta-label">Related domains:</span> } . join(", ", @items) . qq{</span>};
+        }
+    }
+
+    # Response to (list; display verbatim; no URL scheme defined)
+    if ($p->{response_to} && ref($p->{response_to}) eq "ARRAY" && @{ $p->{response_to} }) {
+        my @items = map { html_escape($_) } grep { defined($_) && $_ ne "" } @{ $p->{response_to} };
+        if (@items) {
+            push @meta_bits, qq{<span class="meta-field"><span class="meta-label">Response to:</span> } . join(", ", @items) . qq{</span>};
+        }
+    }
+
+    my $extra_meta = @meta_bits
+      ? ("\n  <p class=\"meta meta-extra\">" . join("<br>\n", @meta_bits) . "</p>")
+      : "";
+
+    # Reader warning (optional): render in italics above the <hr> when present.
+    # NEW DIRECTIVE: reader warning needs a label "Note: ".
+    my $reader_warning_html = "";
+    if (defined($p->{reader_warning}) && $p->{reader_warning} ne "") {
+        my $rw = html_escape($p->{reader_warning});
+        $reader_warning_html = qq{\n  <p class="meta meta-reader-warning"><em>Note: $rw</em></p>};
+    }
     return qq{
 <article class="pamphlet">
   <h1>$p->{title}</h1>
-  <p class="meta">$author_html · $year</p>
+  <p class="meta">$author_html · $year</p>$extra_meta$reader_warning_html
+  <hr>
   <div class="pamphlet-body">
 $p->{body}
   </div>
 </article>
 };
-}
-sub render_index_landing {
+}sub render_index_landing {
     my ($name, $keys) = @_;
 
     # Special handling for authors:

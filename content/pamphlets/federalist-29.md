@@ -11,11 +11,6 @@ domain: Law & Constitution
 subject:
   - US Constitution
 
-# TEMP
-topics:
-  - militia
-  - executive_power
-
 reading_level: advanced
 reader_warning: ""
 

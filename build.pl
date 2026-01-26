@@ -563,10 +563,9 @@ sub parse_pamphlet {
     }
 
     # Optional scalar: missing and empty are equivalent
-    if (exists $m{abstract} && (!defined($m{abstract}) || $m{abstract} eq "")) {
-        delete $m{abstract};
-    }
-    # Optional list fields: if missing or empty, treat as empty list.
+    if (exists $m{orientation} && (!defined($m{orientation}) || $m{orientation} eq "")) {
+        delete $m{orientation};
+    }    # Optional list fields: if missing or empty, treat as empty list.
     for my $k (qw(related_domains geography response_to related)) {
         if (!exists $m{$k} || !defined $m{$k}) {
             $m{$k} = [];
@@ -1218,17 +1217,20 @@ sub render_pamphlet {
         $reader_warning_html = qq{\n  <p class="meta meta-reader-warning"><em>Note: $rw</em></p>};
     }
 
-    # Abstract (optional): paragraph immediately after reader warning on pamphlets.
-    my $abstract_html = "";
-    if (defined($p->{abstract}) && $p->{abstract} ne "") {
-        my $ab = html_escape($p->{abstract});
-        $abstract_html = qq{\n  <p class="meta meta-abstract">$ab</p>};
+    # Orientation (optional): paragraph immediately after reader warning on pamphlets.
+    my $orientation_html = "";
+    if (defined($p->{orientation}) && $p->{orientation} ne "") {
+        my $ab = html_escape($p->{orientation});
+        $orientation_html = qq{\n  <p class="meta meta-orientation"><span class="meta-label">Orientation:</span> $ab</p>};
     }
+
+    my $has_orientation_or_warning = (($orientation_html ne "") || ($reader_warning_html ne ""));
+    my $pre_body_hr = $has_orientation_or_warning ? "\n  <hr>" : "";
 
     return qq{
 <article class="pamphlet">
   <h1>$p->{title}</h1>
-  <p class="meta">$author_html · $year</p>$extra_meta<hr>$abstract_html$reader_warning_html
+  <p class="meta">$author_html · $year</p>$extra_meta$pre_body_hr$orientation_html$reader_warning_html
   <hr>
   <div class="pamphlet-body">
 $p->{body}

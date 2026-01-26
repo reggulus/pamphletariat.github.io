@@ -5,7 +5,7 @@ author_namespace: historical
 author: Brutus
 date: 1788-01-10
 
-era: historical
+
 domain: Law & Constitution
 subject: US Constitution
 

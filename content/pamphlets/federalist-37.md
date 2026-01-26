@@ -5,7 +5,7 @@ author_namespace: historical
 author: Publius
 date: 1788-01-11
 
-era: historical
+
 
 domain: Law & Constitution
 subject: US Constitution

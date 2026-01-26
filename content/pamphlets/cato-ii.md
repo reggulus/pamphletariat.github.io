@@ -5,7 +5,7 @@ author_namespace: historical
 author: Cato
 date: 1787-10-11
 
-era: historical
+
 domain: Law & Constitution
 subject: US Constitution
 

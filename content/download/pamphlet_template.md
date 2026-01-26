@@ -86,16 +86,16 @@ reading_level: advanced
 reader_warning:
 
 # ------------------------------------------------------------------
-# ABSTRACT (REQUIRED)
+# ORIENTATION (REQUIRED)
 # ------------------------------------------------------------------
 
-# The abstract is a required short paragraph answering three reader
+# The orientation is a required short paragraph answering three reader
 # questions up front:
 #
 #   What kind of thing is this?
 #   What is it deliberately not trying to do?
 #   Why should I trust the frame before I invest attention?
-abstract: Abstract paragraph goes here.
+orientation: Orientation paragraph goes here.
 
 # ------------------------------------------------------------------
 # GEOGRAPHY (OPTIONAL)

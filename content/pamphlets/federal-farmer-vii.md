@@ -5,7 +5,7 @@ author_namespace: historical
 author: Federal Farmer
 date: 1787-12-31
 
-era: historical
+
 domain: Law & Constitution
 subject: US Constitution
 

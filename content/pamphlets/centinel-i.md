@@ -5,7 +5,7 @@ author_namespace: historical
 author: Centinel
 date: 1787-10-05
 
-era: historical
+
 domain: Law & Constitution
 subject: US Constitution
 

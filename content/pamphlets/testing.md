@@ -5,7 +5,7 @@ author_namespace: testing
 author: Brutus
 date: 2026-01-19
 
-era: contemporary
+
 
 domain: Power & Institutions
 related_domains:
@@ -15,9 +15,9 @@ related_domains:
 subject: Public Policy
 
 reading_level: general
-reader_warning: "This is extremely boring."
+reader_warning: "This is extremely and graphically boring. The reader has been warned."
 
-abstract: This is just a simple test pamphlet signifying nothing as a test. Note that this is a long abstract that should just work and display correctly at the top of the pamphlet.
+orientation: This is just a simple test pamphlet signifying nothing as a test. Note that this is a long abstract that should just work and display correctly at the top of the pamphlet.
 
 public_domain: false
 

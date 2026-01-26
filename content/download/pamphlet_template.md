@@ -2,6 +2,7 @@
 ###
 ### Pamphletariat.org — Pamphlet Submission Template
 ###
+
 # Updated: 2026-01-25
 #
 # Use this file as the starting point for your pamphlet.
@@ -19,21 +20,17 @@
 # This is the human-readable title shown to readers.
 title: The Federalist No. 1
 
-# Slug used in the URL.
-# Use lowercase letters, numbers, and hyphens only.
-# Save this file as: SLUG.md
-slug: federalist-1
+# IMPORTANT: Filename
+# Turn your title into a filename and save into it.
+# Use only lowercase letters and dashes.
+# For example: "We Need More Vegetables" -> we-need-more-vegetables.md 
 
-# Author namespace.
-# This indicates what naming system the author field comes from.
-# Common values:
-#   historical  — for known historical authors
-#   github      — for GitHub-based pseudonyms
-author_namespace: historical
+# Author namespace. Do not change or delete.
+author_namespace: github
 
 # Author name or pseudonym.
-# For GitHub submissions, use your GitHub username (capitalized).
-author: Publius
+# For GitHub submissions, use your GitHub username verbatim.
+author: publius
 
 # Submission or publication date.
 # Use YYYY-MM-DD format.
@@ -54,6 +51,8 @@ date: 1787-10-27
 #   Political Economy
 #   Power & Institutions
 #   Systems & Failure
+#
+# (Descriptions are on each domain page online.)
 #
 # If the pamphlet touches multiple areas, choose the best fit here
 # and use related_domains below.
@@ -85,6 +84,18 @@ reading_level: advanced
 #   "Contains graphic descriptions of violence."
 # Leave blank or delete if not needed.
 reader_warning:
+
+# ------------------------------------------------------------------
+# ABSTRACT (REQUIRED)
+# ------------------------------------------------------------------
+
+# The abstract is a required short paragraph answering three reader
+# questions up front:
+#
+#   What kind of thing is this?
+#   What is it deliberately not trying to do?
+#   Why should I trust the frame before I invest attention?
+abstract: Abstract paragraph goes here.
 
 # ------------------------------------------------------------------
 # GEOGRAPHY (OPTIONAL)
@@ -139,6 +150,7 @@ related:
 # public_domain: true
 #
 # Delete unused fields entirely.
+# Change author_namespace to "historical"
 
 # ------------------------------------------------------------------
 # END OF FRONTMATTER

@@ -8,6 +8,10 @@ date: 2026-01-19
 era: contemporary
 
 domain: Power & Institutions
+related_domains:
+- Systems & Failure
+- Coordination & Action
+
 subject: Public Policy
 
 reading_level: general
@@ -19,9 +23,15 @@ public_domain: false
 
 response_to:
   - "federalist-1"
+  - "federalist-2"	
+  - "federalist-3"
+  - "federalist-52"
 
 related:
-  - "federalist-2"
+  - "federalist-4"
+  - "federalist-5"
+  - "federalist-83"
+  - "federalist-59"
 ---
 
 ## The Issue

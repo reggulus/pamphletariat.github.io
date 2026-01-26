@@ -1081,7 +1081,7 @@ sub render_pamphlet {
 
     # Domain · Subject · Reader (single-line header-style meta)
     # NEW DIRECTIVE: remove "Domain:" and "Subject:" labels.
-    # Desired: "Domain · Subject · General Reader" (one line layout like author/date).
+    # Desired: "Domain · Subject · General reader" (one line layout like author/date).
     my @header_bits;
 
     # Domain (linkable)
@@ -1101,14 +1101,14 @@ sub render_pamphlet {
     # Reader label (derived from reading_level)
     if (defined($p->{reading_level}) && $p->{reading_level} ne "") {
         my $v = lc($p->{reading_level});
-        my $reader = ($v eq "general")  ? "General Reader"
-                   : ($v eq "advanced") ? "Advanced Reader"
+        my $reader = ($v eq "general")  ? "General reader"
+                   : ($v eq "advanced") ? "Advanced reader"
                    : "";
         push @header_bits, html_escape($reader) if $reader ne "";
     }
 
     if (@header_bits) {
-        push @meta_bits, qq{<span class="meta-field">} . join(" &middot; ", @header_bits) . qq{</span>};
+        push @meta_bits, qq{<p><span class="meta-field">} . join(" &middot; ", @header_bits) . qq{</span></p><hr>};
     }
     # Source (display verbatim)
     # NEW DIRECTIVE: pamphlet source should just say "Source:"
@@ -1180,8 +1180,6 @@ sub render_pamphlet {
         } grep { defined($_) && $_ ne "" } @{ $p->{response_to} };
 
         if (@items) {
-            # NEW DIRECTIVE: there should be an <hr> just above Responding to
-            push @meta_bits, qq{<hr>};
             push @meta_bits, qq{<span class="meta-field"><span class="meta-label">Responding to:</span> } . join(", ", @items) . qq{</span>};
         }
     }
@@ -1225,7 +1223,7 @@ sub render_pamphlet {
     return qq{
 <article class="pamphlet">
   <h1>$p->{title}</h1>
-  <p class="meta">$author_html · $year</p>$extra_meta$reader_warning_html$abstract_html
+  <p class="meta">$author_html · $year</p>$extra_meta<hr>$abstract_html$reader_warning_html
   <hr>
   <div class="pamphlet-body">
 $p->{body}

@@ -25,7 +25,6 @@ The Provision For The Support of the Executive, and the Veto Power
 
 From the New York Packet. Friday, March 21, 1788.
 
-HAMILTON
 
 To the People of the State of New York:
 

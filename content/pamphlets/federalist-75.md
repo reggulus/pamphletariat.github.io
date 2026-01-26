@@ -25,7 +25,6 @@ The Treaty-Making Power of the Executive
 
 For the Independent Journal. Wednesday, March 26, 1788
 
-HAMILTON
 
 To the People of the State of New York:
 

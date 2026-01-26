@@ -26,7 +26,6 @@ of the Many Considered in Connection with Representation.
 
 From the New York Packet. Tuesday, February 19, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

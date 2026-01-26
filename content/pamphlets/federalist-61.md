@@ -26,7 +26,6 @@ the Election of Members)
 
 From the New York Packet. Tuesday, February 26, 1788.
 
-HAMILTON
 
 To the People of the State of New York:
 

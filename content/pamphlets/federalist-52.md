@@ -25,7 +25,6 @@ The House of Representatives
 
 From the New York Packet. Friday, February 8, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

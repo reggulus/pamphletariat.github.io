@@ -26,7 +26,6 @@ Constitutional Control Over Each Other.
 
 From the New York Packet. Friday, February 1, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

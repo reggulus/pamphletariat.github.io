@@ -25,7 +25,6 @@ Concerning the Power of Congress to Regulate the Election of Members
 
 From the New York Packet. Friday, February 22, 1788.
 
-HAMILTON
 
 To the People of the State of New York:
 

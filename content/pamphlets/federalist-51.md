@@ -26,7 +26,6 @@ Balances Between the Different Departments.
 
 For the Independent Journal. Wednesday, February 6, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

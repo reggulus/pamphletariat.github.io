@@ -25,7 +25,6 @@ Advantage of the Union in Respect to Economy in Government
 
 For the Independent Journal. Wednesday, November 28, 1787
 
-HAMILTON
 
 To the People of the State of New York:
 

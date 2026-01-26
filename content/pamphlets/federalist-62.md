@@ -25,7 +25,6 @@ The Senate
 
 For the Independent Journal. Wednesday, February 27, 1788
 
-MADISON
 
 To the People of the State of New York:
 

@@ -26,7 +26,7 @@ Confederation to Preserve the Union)
 
 For the Independent Journal. Saturday, December 8, 1787
 
-MADISON, with HAMILTON
+
 
 To the People of the State of New York:
 

@@ -25,7 +25,6 @@ The Judiciary Department
 
 From McLEAN'S Edition, New York. Wednesday, May 28, 1788
 
-HAMILTON
 
 To the People of the State of New York:
 

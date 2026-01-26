@@ -25,7 +25,6 @@ The Influence of the State and Federal Governments Compared
 
 From the New York Packet. Tuesday, January 29, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

@@ -26,7 +26,6 @@ Confederation to Preserve the Union)
 
 From the New York Packet. Tuesday, December 4, 1787.
 
-HAMILTON
 
 To the People of the State of New York:
 

@@ -25,7 +25,6 @@ Periodical Appeals to the People Considered
 
 From the New York Packet. Tuesday, February 5, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

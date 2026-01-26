@@ -25,7 +25,6 @@ The Powers of the Senate Continued
 
 From the New York Packet. Friday, March 7, 1788.
 
-HAMILTON
 
 To the People of the State of New York:
 

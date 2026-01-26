@@ -25,7 +25,6 @@ Concerning the General Power of Taxation
 
 From the New York Packet. Friday, December 28, 1787.
 
-HAMILTON
 
 To the People of the State of New York:
 

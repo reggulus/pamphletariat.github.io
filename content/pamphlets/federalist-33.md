@@ -25,7 +25,6 @@ The Same Subject Continued (Concerning the General Power of Taxation)
 
 From The Independent Journal. Wednesday, January 2, 1788.
 
-HAMILTON
 
 To the People of the State of New York:
 

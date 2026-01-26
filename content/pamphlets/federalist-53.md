@@ -25,7 +25,6 @@ The Same Subject Continued (The House of Representatives)
 
 For the Independent Journal. Saturday, February 9, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

@@ -26,7 +26,6 @@ Confederation to Preserve the Union)
 
 For the Independent Journal. Wednesday, December 5, 1787
 
-HAMILTON
 
 To the People of the State of New York:
 

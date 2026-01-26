@@ -26,7 +26,6 @@ Further Considered.
 
 From The Independent Journal. Saturday, March 8, 1788.
 
-HAMILTON
 
 To the People of the State of New York:
 

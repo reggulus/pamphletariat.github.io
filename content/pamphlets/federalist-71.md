@@ -25,7 +25,6 @@ The Duration in Office of the Executive
 
 From the New York Packet. Tuesday, March 18, 1788.
 
-HAMILTON
 
 To the People of the State of New York:
 

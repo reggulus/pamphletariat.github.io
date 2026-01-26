@@ -25,7 +25,6 @@ The Appointing Power of the Executive
 
 From the New York Packet. Tuesday, April 1, 1788.
 
-HAMILTON
 
 To the People of the State of New York:
 

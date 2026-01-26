@@ -26,7 +26,6 @@ New Plan Exposed.
 
 From The Independent Journal. Saturday, January 12, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

@@ -25,7 +25,6 @@ The Real Character of the Executive
 
 From the New York Packet. Friday, March 14, 1788.
 
-HAMILTON
 
 To the People of the State of New York:
 

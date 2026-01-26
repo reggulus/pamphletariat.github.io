@@ -25,7 +25,6 @@ The Consequences of Hostilities Between the States
 
 From the New York Packet. Tuesday, November 20, 1787.
 
-HAMILTON
 
 To the People of the State of New York:
 

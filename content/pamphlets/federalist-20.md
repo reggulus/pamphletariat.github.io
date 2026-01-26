@@ -26,7 +26,7 @@ Confederation to Preserve the Union)
 
 From the New York Packet. Tuesday, December 11, 1787.
 
-MADISON, with HAMILTON
+
 
 To the People of the State of New York:
 

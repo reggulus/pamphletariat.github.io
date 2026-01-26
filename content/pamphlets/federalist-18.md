@@ -25,7 +25,7 @@ The Same Subject Continued (The Insufficiency of the Present
 Confederation to Preserve the Union) For the New York Packet. Friday,
 December 7, 1787
 
-MADISON, with HAMILTON
+
 
 To the People of the State of New York:
 

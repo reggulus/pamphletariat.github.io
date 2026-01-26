@@ -25,7 +25,6 @@ Other Defects of the Present Confederation
 
 For the Independent Journal. Wednesday, December 12, 1787
 
-HAMILTON
 
 To the People of the State of New York:
 

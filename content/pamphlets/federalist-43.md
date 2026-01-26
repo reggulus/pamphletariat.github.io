@@ -26,7 +26,6 @@ Further Considered)
 
 For the Independent Journal. Wednesday, January 23, 1788
 
-MADISON
 
 To the People of the State of New York:
 

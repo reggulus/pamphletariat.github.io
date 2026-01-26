@@ -25,7 +25,6 @@ The Same Subject Continued (Concerning the General Power of Taxation)
 
 From the New York Packet. Tuesday, January 1, 1788.
 
-HAMILTON
 
 To the People of the State of New York:
 

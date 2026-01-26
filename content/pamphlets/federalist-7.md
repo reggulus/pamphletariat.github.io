@@ -26,7 +26,6 @@ the States)
 
 For the Independent Journal. Thursday, November 15, 1787
 
-HAMILTON
 
 To the People of the State of New York:
 

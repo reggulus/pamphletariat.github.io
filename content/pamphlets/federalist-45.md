@@ -25,7 +25,6 @@ The Alleged Danger From the Powers of the Union to the State Governments.
 
 Considered For the Independent Journal. Saturday, January 26, 1788
 
-MADISON
 
 To the People of the State of New York:
 

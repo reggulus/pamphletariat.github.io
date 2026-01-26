@@ -25,7 +25,6 @@ The Senate Continued
 
 For the Independent Journal. Saturday, March 1, 1788
 
-MADISON
 
 To the People of the State of New York:
 

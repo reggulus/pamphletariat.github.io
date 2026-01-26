@@ -25,7 +25,6 @@ The Powers of the Senate
 
 From The Independent Journal. Wednesday, March 5, 1788.
 
-JAY
 
 To the People of the State of New York:
 

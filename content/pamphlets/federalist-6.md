@@ -25,7 +25,6 @@ Concerning Dangers from Dissensions Between the States
 
 For the Independent Journal. Wednesday, November 14, 1787
 
-HAMILTON
 
 To the People of the State of New York:
 

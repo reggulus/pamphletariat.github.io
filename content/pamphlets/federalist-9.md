@@ -25,7 +25,6 @@ The Union as a Safeguard Against Domestic Faction and Insurrection
 
 For the Independent Journal. Wednesday, November 21, 1787
 
-HAMILTON
 
 To the People of the State of New York:
 

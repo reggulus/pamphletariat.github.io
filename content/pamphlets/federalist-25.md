@@ -26,7 +26,6 @@ Further Considered)
 
 From the New York Packet. Friday, December 21, 1787.
 
-HAMILTON
 
 To the People of the State of New York:
 

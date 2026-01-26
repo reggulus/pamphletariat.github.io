@@ -25,7 +25,6 @@ The Executive Department
 
 From the New York Packet. Tuesday, March 11, 1788.
 
-HAMILTON
 
 To the People of the State of New York:
 

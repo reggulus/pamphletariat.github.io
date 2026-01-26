@@ -26,7 +26,6 @@ the Election of Members)
 
 From The Independent Journal. Saturday, February 23, 1788.
 
-HAMILTON
 
 To the People of the State of New York:
 

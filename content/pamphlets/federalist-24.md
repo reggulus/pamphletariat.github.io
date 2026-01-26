@@ -25,7 +25,6 @@ The Powers Necessary to the Common Defense Further Considered
 
 For the Independent Journal. Wednesday, December 19, 1787
 
-HAMILTON
 
 To the People of the State of New York:
 

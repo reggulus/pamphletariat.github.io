@@ -25,7 +25,6 @@ The Same Subject Continued (Other Defects of the Present Confederation)
 
 From the New York Packet. Friday, December 14, 1787.
 
-HAMILTON
 
 To the People of the State of New York:
 

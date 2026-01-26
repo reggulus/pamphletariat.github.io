@@ -25,7 +25,6 @@ The Powers Conferred by the Constitution Further Considered
 
 From the New York Packet. Tuesday, January 22, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

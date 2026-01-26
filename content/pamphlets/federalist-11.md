@@ -25,7 +25,6 @@ The Utility of the Union in Respect to Commercial Relations and a Navy
 
 For the Independent Journal. Saturday, November 24, 1787
 
-HAMILTON
 
 To the People of the State of New York:
 

@@ -25,7 +25,6 @@ The Utility of the Union In Respect to Revenue
 
 From the New York Packet. Tuesday, November 27, 1787.
 
-HAMILTON
 
 To the People of the State of New York:
 

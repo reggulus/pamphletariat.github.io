@@ -26,7 +26,6 @@ of Government.
 
 From the Daily Advertiser. Friday, January 11, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

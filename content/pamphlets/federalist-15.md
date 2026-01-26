@@ -25,7 +25,6 @@ The Insufficiency of the Present Confederation to Preserve the Union
 
 For the Independent Journal. Saturday, December 1, 1787
 
-HAMILTON
 
 To the People of the State of New York.
 

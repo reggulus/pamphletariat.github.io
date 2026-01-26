@@ -25,7 +25,6 @@ The Judiciary Continued in Relation to Trial by Jury
 
 From MCLEAN's Edition, New York. Wednesday, May 28, 1788
 
-HAMILTON
 
 To the People of the State of New York:
 

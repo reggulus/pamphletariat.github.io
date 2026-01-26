@@ -26,7 +26,6 @@ Considered and Answered.
 
 From McLEAN's Edition, New York. Wednesday, May 28, 1788
 
-HAMILTON
 
 To the People of the State of New York:
 

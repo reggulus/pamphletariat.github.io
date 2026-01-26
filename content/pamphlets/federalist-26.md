@@ -26,7 +26,6 @@ Common Defense Considered.
 
 For the Independent Journal. Saturday, December 22, 1788
 
-HAMILTON
 
 To the People of the State of New York:
 

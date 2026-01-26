@@ -26,7 +26,6 @@ Government by Appealing to the People Through a Convention.
 
 For the Independent Journal. Saturday, February 2, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

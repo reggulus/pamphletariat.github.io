@@ -26,7 +26,6 @@ Preservation of the Union
 
 From the New York Packet. Tuesday, December 18, 1787.
 
-HAMILTON
 
 To the People of the State of New York:
 

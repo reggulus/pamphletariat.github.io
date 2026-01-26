@@ -26,7 +26,6 @@ Representatives)
 
 For the Independent Journal. Saturday, February 16, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

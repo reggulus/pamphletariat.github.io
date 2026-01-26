@@ -26,7 +26,6 @@ Progress of Population Demands.
 
 Considered For the Independent Journal Wednesday, February 20, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

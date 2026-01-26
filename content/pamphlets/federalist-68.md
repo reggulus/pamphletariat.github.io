@@ -25,7 +25,6 @@ The Mode of Electing the President
 
 From The Independent Journal. Wednesday, March 12, 1788.
 
-HAMILTON
 
 To the People of the State of New York:
 

@@ -26,7 +26,6 @@ Influence)
 
 For the Independent Journal. Saturday, November 3, 1787
 
-JAY
 
 To the People of the State of New York:
 

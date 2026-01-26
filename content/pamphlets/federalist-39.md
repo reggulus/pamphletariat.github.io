@@ -25,7 +25,6 @@ The Conformity of the Plan to Republican Principles
 
 For the Independent Journal. Wednesday, January 16, 1788
 
-MADISON
 
 To the People of the State of New York:
 

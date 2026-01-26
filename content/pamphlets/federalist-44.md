@@ -25,7 +25,6 @@ Restrictions on the Authority of the Several States
 
 From the New York Packet. Friday, January 25, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

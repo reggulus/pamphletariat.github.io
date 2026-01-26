@@ -25,7 +25,6 @@ The Executive Department Further Considered
 
 From The Independent Journal. Saturday, March 15, 1788.
 
-HAMILTON
 
 To the People of the State of New York:
 

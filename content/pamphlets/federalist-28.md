@@ -26,7 +26,6 @@ Authority in Regard to the Common Defense Considered)
 
 For the Independent Journal. Wednesday, December 26, 1787
 
-HAMILTON
 
 To the People of the State of New York:
 

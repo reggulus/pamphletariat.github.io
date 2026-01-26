@@ -26,7 +26,6 @@ Answered
 
 From the New York Packet. Friday, November 30, 1787.
 
-MADISON
 
 To the People of the State of New York:
 

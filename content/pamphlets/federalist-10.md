@@ -26,7 +26,6 @@ Faction and Insurrection)
 
 From the Daily Advertiser. Thursday, November 22, 1787.
 
-MADISON
 
 To the People of the State of New York:
 

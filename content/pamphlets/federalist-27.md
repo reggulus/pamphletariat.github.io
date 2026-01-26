@@ -26,7 +26,6 @@ Authority in Regard to the Common Defense Considered)
 
 From the New York Packet. Tuesday, December 25, 1787.
 
-HAMILTON
 
 To the People of the State of New York:
 

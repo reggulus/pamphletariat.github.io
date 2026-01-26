@@ -26,7 +26,6 @@ Power Among Its Different Parts.
 
 For the Independent Journal. Wednesday, January 30, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

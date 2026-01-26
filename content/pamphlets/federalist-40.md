@@ -24,7 +24,6 @@ related:
 On the Powers of the Convention to Form a Mixed Government Examined and
 Sustained For the New York Packet. Friday, January 18, 1788.
 
-MADISON
 
 To the People of the State of New York:
 

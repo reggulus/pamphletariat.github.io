@@ -25,7 +25,6 @@ Concerning the Militia
 
 From the New York Packet. Wednesday, January 9, 1788
 
-HAMILTON
 
 To the People of the State of New York:
 

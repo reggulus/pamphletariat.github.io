@@ -1077,19 +1077,33 @@ sub emit_index_group {
             my $base = "/$name/$slug";
 
             # For eras, do not prefix the label at all (no "Era:" / "Eras:").
-            # Authors pages should read like: "Pamphlets by Brutus (historical)".
+            # Authors pages should show "(namespace)" ONLY when disambiguation is needed.
             # For other index types, keep a readable singular label.
             my $page_label;
+            my $page_title = "$name: $k";
             if ($name eq "eras") {
                 $page_label = $k;
+                $page_title = $page_label;
             } elsif ($name eq "authors") {
+                # Determine whether this author's *name* is duplicated across namespaces.
+                my %count;
+                for my $id (keys %$index) {
+                    my (undef, $nm2) = author_id_parts($id);
+                    $count{$nm2}++;
+                }
                 my ($ns, $nm) = author_id_parts($k);
+                my $needs_disambiguation = (($count{$nm} // 0) > 1) ? 1 : 0;
+
                 my $count_total = scalar(@{ $items || [] });
                 $page_label = "Pamphlets by $nm";
-                $page_label .= " ($ns)" if defined($ns) && $ns ne "" && $ns ne "default";
+                $page_label .= " ($ns)" if $needs_disambiguation && defined($ns) && $ns ne "";
                 $page_label .= " — $count_total";
+
+                # Keep the browser/tab title aligned with what users see on the page.
+                $page_title = $page_label;
             } else {
                 $page_label = ucfirst($name) . ": $k";
+                $page_title = $page_label;
             }
             $inner = render_index_page(
                 $page_label,
@@ -1097,14 +1111,19 @@ sub emit_index_group {
                 feed_base  => $base,
                 feed_label => $page_label,
             );
+
+            write_file(
+                "$dir/$slug.html",
+                wrap_layout($page_title, $inner)
+            );
+            next;
         }
         write_file(
             "$dir/$slug.html",
-            wrap_layout("$name: $k", $inner)
+            wrap_layout(ucfirst($name) . ": $k", $inner)
         );
     }
-}
-# -------------------------
+}# -------------------------
 # RENDERERS
 # -------------------------
 

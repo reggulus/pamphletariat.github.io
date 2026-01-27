@@ -12,9 +12,7 @@
 # If a field is not relevant to your pamphlet, DELETE IT ENTIRELY.
 # Omission is allowed and preferred to guessing.
 
-# ------------------------------------------------------------------
-# REQUIRED METADATA
-# ------------------------------------------------------------------
+### REQUIRED METADATA
 
 # Title of the pamphlet.
 # This is the human-readable title shown to readers.
@@ -40,9 +38,7 @@ author: publius
 # Use YYYY-MM-DD format.
 date: 1787-10-27
 
-# ------------------------------------------------------------------
-# CLASSIFICATION
-# ------------------------------------------------------------------
+### CLASSIFICATION
 
 # Primary domain this pamphlet belongs to.
 # Choose EXACTLY ONE from the list below (case sensitive):
@@ -89,9 +85,7 @@ reading_level: advanced
 # Leave blank or delete if not needed.
 reader_warning:
 
-# ------------------------------------------------------------------
-# ORIENTATION (REQUIRED)
-# ------------------------------------------------------------------
+### ORIENTATION (REQUIRED)
 
 # The orientation is a required short paragraph answering three reader
 # questions up front:
@@ -101,9 +95,7 @@ reader_warning:
 #   Why should I trust the frame before I invest attention?
 orientation: Orientation paragraph goes here.
 
-# ------------------------------------------------------------------
-# GEOGRAPHY (OPTIONAL)
-# ------------------------------------------------------------------
+### GEOGRAPHY (OPTIONAL)
 
 # Optional place-based classification for browsing.
 # Use this ONLY if the pamphlet is meaningfully tied to a place.
@@ -120,9 +112,7 @@ orientation: Orientation paragraph goes here.
 geography:
   - United States
 
-# ------------------------------------------------------------------
-# RELATIONSHIPS TO OTHER PAMPHLETS (OPTIONAL)
-# ------------------------------------------------------------------
+### RELATIONSHIPS TO OTHER PAMPHLETS (OPTIONAL)
 
 # Optional: pamphlets this one directly responds to.
 # Use the slug from the pamphlet URL.
@@ -142,9 +132,7 @@ related:
   - SLUG2
   - SLUG3
 
-# ------------------------------------------------------------------
-# HISTORICAL / SOURCE INFORMATION (OPTIONAL)
-# ------------------------------------------------------------------
+### HISTORICAL / SOURCE INFORMATION (OPTIONAL)
 
 # Uncomment and fill out these fields if the pamphlet is historical,
 # transcribed, or sourced from an existing publication.
@@ -156,11 +144,9 @@ related:
 # Delete unused fields entirely.
 # Change author_namespace to "historical"
 
-# ------------------------------------------------------------------
-# END OF FRONTMATTER
-# ------------------------------------------------------------------
+### END OF FRONTMATTER
 
-# Begin Pamphlet Text Below
+### Begin Pamphlet Text Below
 
 # You may use Markdown formatting:
 #

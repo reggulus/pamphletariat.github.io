@@ -10,6 +10,7 @@ subject: American Independence
 reading_level: general
 geography:
 - United States
+public_domain: true
 ---
 
 COMMON SENSE;

@@ -13,7 +13,7 @@ subject: US Constitution
 reading_level: advanced
 reader_warning: ""
 
-source: "Project Gutenberg"
+
 public_domain: true
 
 related:

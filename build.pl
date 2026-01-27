@@ -1353,10 +1353,9 @@ $p->{body}
     my $left  = join "\n", @rows[0 .. ($half - 1)];
     my $right = join "\n", @rows[$half .. $#rows];
 
-    my $heading = ($name eq "authors") ? "<h1>Authors</h1>\n"
-                 : ($name eq "subjects") ? "<h1>Subjects</h1>\n"
+    my $heading = ($name eq "authors") ? "<h1>Authors</h1>\n<hr>\n"
+                 : ($name eq "subjects") ? "<h1>Subjects</h1>\n<hr>\n"
                  : "";
-
     return qq{
 $heading<div class="toc-2col" role="navigation" aria-label="Browse $name">
   <table class="toc-col" role="presentation">

@@ -1624,7 +1624,8 @@ sub render_site_nav {
   <div class="nav-inner">
     <a href="/why/">Why</a> ·
     <a href="/submit/">Submissions</a> ·
-    <a href="/involvement/">Get Involved</a>
+    <a href="/involvement/">Get Involved</a> ·
+    <a href="/">Home</a>
   </div>
 </nav>
 };

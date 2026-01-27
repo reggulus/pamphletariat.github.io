@@ -15,9 +15,8 @@ use File::Spec;
 # CONFIG
 # -------------------------
 
-my $CONTENT_DIR = "content/pamphlets";
+my $CONTENT_DIR = "pamphlets";
 my $PAGES_DIR = "content/pages";
-
 my $OUT_DIR     = "dist";
 
 my @ASSET_DIRS = ("css", "img");

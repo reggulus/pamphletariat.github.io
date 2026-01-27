@@ -464,6 +464,16 @@ sub parse_pamphlet {
     open my $fh, "<:encoding(UTF-8)", $path or die "Open $path: $!";
     my $raw = do { local $/; <$fh> };
 
+    # Defensive: should not happen, but avoids noisy warnings if a read fails.
+    $raw //= "";
+
+    # Strip UTF-8 BOM if present. Some editors write BOM-prefixed UTF-8, which can
+    # break "line is exactly ---" frontmatter delimiter detection.
+    $raw =~ s/^\x{FEFF}//;
+    # Normalize newlines for robust frontmatter delimiter detection.
+    # Without this, CRLF files leave trailing "\r" on each line, causing
+    # the /^\s*---\s*\z/ checks to fail and falsely report a missing end delimiter.
+    $raw =~ s/\r\n?/\n/g;
     # Slug is authoritative from filename (NEW DIRECTIVE).
     # Frontmatter may contain its own required `slug` field, which is validated
     # per spec but is NOT used for output paths/URLs.
@@ -481,7 +491,25 @@ sub parse_pamphlet {
             last;
         }
     }
-    die "Missing frontmatter start delimiter (---) in $path\n" if $fm_start < 0;
+    if ($fm_start < 0) {
+        # Frontmatter is expected at the top of the file; report line context.
+        # Use 1-based line numbers for user-facing messages.
+        my $first_nonempty_i = -1;
+        for (my $k = 0; $k <= $#lines; $k++) {
+            next if !defined($lines[$k]);
+            next if $lines[$k] =~ /^\s*\z/;
+            $first_nonempty_i = $k;
+            last;
+        }
+        my $expected_line = 1;
+        my $hint = "";
+        if ($first_nonempty_i >= 0) {
+            my $ln = $first_nonempty_i + 1;
+            my $txt = $lines[$first_nonempty_i];
+            $hint = "First non-empty line is $ln: $txt\n";
+        }
+        die "Missing frontmatter start delimiter (---) in $path (expected at line $expected_line)\n$hint";
+    }
 
     for (my $j = $fm_start + 1; $j <= $#lines; $j++) {
         if ($lines[$j] =~ /^\s*---\s*\z/) {
@@ -489,9 +517,15 @@ sub parse_pamphlet {
             last;
         }
     }
-    die "Missing frontmatter end delimiter (---) in $path\n" if $fm_end < 0;    my @fm_lines = @lines[ ($fm_start + 1) .. ($fm_end - 1) ];
-    my $body = join("\n", @lines[ ($fm_end + 1) .. $#lines ]);
 
+    if ($fm_end < 0) {
+        my $start_line = $fm_start + 1;
+        my $eof_line   = scalar(@lines); # 1-based last line number (including possible trailing empty)
+        die "Missing frontmatter end delimiter (---) in $path (started at line $start_line; reached EOF at line $eof_line)\n";
+    }
+
+    my @fm_lines = @lines[ ($fm_start + 1) .. ($fm_end - 1) ];
+    my $body = join("\n", @lines[ ($fm_end + 1) .. $#lines ]);
     # YAML parsing (template-driven, minimal subset):
     # - scalars: key: value (single line)
     # - lists: key: then subsequent "- item" lines

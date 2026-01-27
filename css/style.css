@@ -36,8 +36,10 @@
 :root {
   --bg: #ffffff;
   --fg: #111111;
-  --fg-muted: #555555;
-  --fg-faint: #666666;
+
+  /* Light theme: increase contrast for TOC leaders/counts and other secondary text */
+  --fg-muted: #333333;
+  --fg-faint: #444444;
 
   --link: #0645ad;
   --link-visited: #0b0080;
@@ -45,7 +47,6 @@
   --border-soft: #cccccc;
   --code-bg: #f4f4f4;
 }
-
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #0f0f0f;
@@ -607,62 +608,57 @@ a.toc-link[href] .toc-label {
 }
 
 /* =========================================================
-   10) PAMPHLET LIST ROWS (TITLE + META LINE)
+   10) PAMPHLET LISTS (SIMPLE 2-LINE ENTRIES)
    ========================================================= */
 
-/* Pamphlet lists should NOT look like TOCs.
-   Keep markup as-is, but render each pamphlet row as a simple 2-line entry
-   in the body font, with normal line spacing and a bit more space between items. */
+/* Pamphlet listings (Latest Additions, index pages, domain pages) should NOT
+   look like TOCs. They have their own small, consistent pattern:
+   - Title line is larger
+   - Metadata line is smaller and muted */
 
-/* Extra space between pamphlets in the list */
-.toc-2col tr.toc-item:has(.toc-link.has-meta) .toc-cell {
+:root {
+  /* Increase contrast between title and metadata in pamphlet lists */
+  --pamphlet-list-title-size: 1.12rem;
+  --pamphlet-list-meta-size: 0.80rem;
+}
+/* Add a touch more vertical rhythm between pamphlets */
+.toc-2col tr.pamphlet-list-item .pamphlet-list-cell {
   padding: 0.55rem 0;
 }
 
-/* Make the pamphlet link a normal block, not a TOC grid row */
-.toc-2col .toc-link.has-meta {
+.pamphlet-list-link {
   display: block;
   width: 100%;
-
-  /* inherit body font (not Warbler) */
-  font-family: inherit;
   color: inherit;
-
   text-decoration: none;
 }
 
-/* Title line: body font, normal line height */
-.toc-2col .toc-link.has-meta .toc-label {
-  font-family: inherit;
-  font-size: 1rem;
-  line-height: 1.4;
-}
-
-/* Ensure the title is always on its own line (meta starts on the next line) */
-.toc-2col .toc-link.has-meta .toc-title {
+/* Explicit sizes (not only CSS variables) so list pages like Eras
+   always show a visible hierarchy even if variables are overridden. */
+.pamphlet-list-title {
   display: block;
-}
-/* Underline only the title text, like a normal link */
-.toc-2col a.toc-link.has-meta[href] .toc-label {
+  font-family: inherit;
+  font-size: var(--pamphlet-list-title-size, 1.12rem);
+  font-weight: 600;
+  line-height: 1.35;
   text-decoration: underline;
   text-underline-offset: 0.18em;
 }
 
-/* Meta/details line: same body font, slightly smaller, normal spacing */
-.toc-2col .toc-link.has-meta .toc-meta {
-  margin-top: 0.25rem;
+.pamphlet-list-meta {
+  display: block;
+  margin-top: 0.2rem;
   font-family: inherit;
-  font-size: 0.95rem;
-  line-height: 1.4;
+  font-size: var(--pamphlet-list-meta-size, 0.80rem);
+  line-height: 1.35;
   color: var(--fg-muted);
 }
-
-/* Meta author should not be small-caps/letterspaced */
-.toc-2col .toc-link.has-meta .toc-meta .toc-author {
-  font-variant: normal;
-  letter-spacing: normal;
+/* Keep author link looking like normal text within the meta line, while still clickable */
+.pamphlet-list-meta .author-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
 }
-
 
 /* HR */
 

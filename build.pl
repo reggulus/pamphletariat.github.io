@@ -726,15 +726,14 @@ sub render_pamphlet_list_row {
 
     my $when   = html_escape(format_month_year($p->{date}, ($p->{year} // "")));
 
-    my $meta_line = join " · ", grep { defined($_) && $_ ne "" } ($author_text, $when);
-    my $count_html = ''; #defined($count_text) ? qq{<span class="toc-count">$count_text</span>} : "";
+    # Note: $count_text is intentionally ignored for pamphlet lists.
+    # Pamphlet lists are rendered with their own simpler styling (not TOC leaders/counts).
 
-    return qq{        <tr class="toc-item">
-          <td class="toc-cell">
-            <a class="toc-link has-meta" href="$href">
-              <span class="toc-title"><span class="toc-label">$title</span></span>
-              <span class="toc-meta"><span class="toc-author">$author</span> · <span class="toc-when">$when</span></span>
-              $count_html
+    return qq{        <tr class="toc-item pamphlet-list-item">
+          <td class="toc-cell pamphlet-list-cell">
+            <a class="pamphlet-list-link" href="$href">
+              <span class="pamphlet-list-title">$title</span>
+              <span class="pamphlet-list-meta">$author · $when</span>
             </a>
           </td>
         </tr>};

@@ -1,6 +1,7 @@
 ---
 ###
-### Pamphletariat.org — Pamphlet Submission Template
+### Pamphletariat.org Pamphlet Submission Template
+### (with comments)
 ###
 
 # Updated: 2026-01-25

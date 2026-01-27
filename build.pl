@@ -144,11 +144,36 @@ sub index_pamphlets {
         push @{ $by_author{ $p->{author_id} } }, $p if $p->{author_id};
         push @{ $by_year{   $p->{year}   } }, $p if $p->{year};
         push @{ $by_era{    $p->{era}    } }, $p if $p->{era};
-        push @{ $by_subject{$_} },   $p for @{ $p->{subjects}   || [] };
+
+        # Subjects
+        # Canonical required field is singular `subject` (per parse_pamphlet required fields).
+        # The rest of the build (e.g., domain pages) expects an arrayref `subjects`.
+        # Keep both working:
+        #   - Index by the required singular subject
+        #   - Also honor an optional plural list if present
+        my %seen_subject;
+
+        if (defined($p->{subject}) && $p->{subject} ne "") {
+            $seen_subject{ $p->{subject} } = 1;
+        }
+
+        if ($p->{subjects} && ref($p->{subjects}) eq "ARRAY") {
+            for my $s (@{ $p->{subjects} }) {
+                next unless defined $s && $s ne "";
+                $seen_subject{$s} = 1;
+            }
+        }
+
+        # Ensure $p->{subjects} exists as an arrayref for other renderers.
+        $p->{subjects} = [ sort keys %seen_subject ];
+
+        for my $s (keys %seen_subject) {
+            push @{ $by_subject{$s} }, $p;
+        }
+
         push @{ $by_geography{$_} }, $p for @{ $p->{geography} || [] };
     }
 }
-
 sub emit_pages {
     emit_root_index();
     emit_static_pages();
@@ -1292,11 +1317,21 @@ $p->{body}
         }
 
         # Counts for landing pages: show how many pamphlets are in this bucket.
+        # Use the index key directly so subjects/domains/years/etc. get correct counts.
         my $count = 0;
         if ($name eq "authors") {
             $count = scalar(@{ $by_author{$key} || [] });
+        } elsif ($name eq "subjects") {
+            $count = scalar(@{ $by_subject{$key} || [] });
+        } elsif ($name eq "domains") {
+            $count = scalar(@{ $by_domain{$key} || [] });
+        } elsif ($name eq "years") {
+            $count = scalar(@{ $by_year{$key} || [] });
+        } elsif ($name eq "eras") {
+            $count = scalar(@{ $by_era{$key} || [] });
+        } elsif ($name eq "geography") {
+            $count = scalar(@{ $by_geography{$key} || [] });
         }
-
         my $count_display = ($count == 0)
           ? qq{<span class="toc-zero" aria-label="none">&mdash;</span>}
           : $count;
@@ -1318,7 +1353,9 @@ $p->{body}
     my $left  = join "\n", @rows[0 .. ($half - 1)];
     my $right = join "\n", @rows[$half .. $#rows];
 
-    my $heading = ($name eq "authors") ? "<h1>Authors</h1>\n" : "";
+    my $heading = ($name eq "authors") ? "<h1>Authors</h1>\n"
+                 : ($name eq "subjects") ? "<h1>Subjects</h1>\n"
+                 : "";
 
     return qq{
 $heading<div class="toc-2col" role="navigation" aria-label="Browse $name">
@@ -1331,7 +1368,8 @@ $right
   </table>
 </div>
 };
-}sub render_index_page {    my ($label, $items, %opts) = @_;
+}sub render_index_page {
+    my ($label, $items, %opts) = @_;
 
     # Optional feed metadata
     my $feed_base  = $opts{feed_base}  // ""; # e.g. "/subjects/foo" (without extension)
@@ -1344,6 +1382,15 @@ $right
         $feeds = qq{<p class="feed-links"><a href="$rss">RSS</a> · <a href="$atom">Atom</a></p>};
     }
 
+    # Era pages should look like author pages: simple centered h1, no line above it.
+    # We detect eras by the label format we generate elsewhere.
+    my $is_era_page = (defined($feed_label) && ($feed_label eq "Contemporary" || $feed_label =~ /^\d+(?:st|nd|rd|th)-Century\z/)) ? 1 : 0;
+
+    my $heading_class = $is_era_page ? "" : "browse";
+    my $h1_style = $is_era_page ? " style=\"text-align: center\"" : "";
+
+    my $header_hr = ($feeds ne "") ? "\n  <hr>" : "";
+
     my @rows = map {
         my $year = html_escape($_->{year} // "");
         render_pamphlet_list_row($_, $year);
@@ -1354,9 +1401,9 @@ $right
     my $right = ($half && @rows > $half) ? join("\n", @rows[$half .. $#rows]) : "";
 
     return qq{
-<section class="browse">
-  <h1>} . html_escape($feed_label) . qq{</h1>
-  $feeds
+<section class="$heading_class">
+  <h1$h1_style>} . html_escape($feed_label) . qq{</h1>
+  $feeds$header_hr
 </section>
 
 <div class="toc-2col" role="navigation" aria-label="$label">

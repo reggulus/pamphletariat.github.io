@@ -1,10 +1,7 @@
 
 # ToDo
 
-1. More comlete pamphlet top display
-1. Document how to submit PR exactly
-7. Source a contemporary pamphlet
-8. Spread the word
+1. Spread the word
 
 ## Future
 

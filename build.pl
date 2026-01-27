@@ -580,6 +580,15 @@ sub parse_pamphlet {
     # Optional scalar: missing and empty are equivalent
     if (exists $m{orientation} && (!defined($m{orientation}) || $m{orientation} eq "")) {
         delete $m{orientation};
+    }
+    # Optional scalar: missing and empty are equivalent
+    if (exists $m{orientation} && (!defined($m{orientation}) || $m{orientation} eq "")) {
+        delete $m{orientation};
+    }
+
+    # Optional scalar: missing and empty are equivalent
+    if (exists $m{subtitle} && (!defined($m{subtitle}) || $m{subtitle} eq "")) {
+        delete $m{subtitle};
     }    # Optional list fields: if missing or empty, treat as empty list.
     for my $k (qw(related_domains geography response_to related)) {
         if (!exists $m{$k} || !defined $m{$k}) {
@@ -1242,9 +1251,15 @@ sub render_pamphlet {
     my $has_orientation_or_warning = (($orientation_html ne "") || ($reader_warning_html ne ""));
     my $pre_body_hr = $has_orientation_or_warning ? "\n  <hr>" : "";
 
+    my $subtitle_html = "";
+    if (defined($p->{subtitle}) && $p->{subtitle} ne "") {
+        my $st = html_escape($p->{subtitle});
+        $subtitle_html = qq{\n  <h2 class="pamphlet-subtitle">$st</h2>};
+    }
+
     return qq{
 <article class="pamphlet">
-  <h1>$p->{title}</h1>
+  <h1>$p->{title}</h1>$subtitle_html
   <p class="meta">$author_html · $year</p>$extra_meta$pre_body_hr$orientation_html$reader_warning_html
   <hr>
   <div class="pamphlet-body">
@@ -1605,7 +1620,11 @@ sub md_to_html {
     # Each entry is a hash: { indent => N, open_li => 0|1 }
     my @ol_stack;
 
-    my $close_open_li = sub {
+    # Stack of active unordered lists by indent level (in spaces).
+    # Each entry is a hash: { indent => N, open_li => 0|1 }
+    my @ul_stack;
+
+    my $close_open_ol_li = sub {
         return unless @ol_stack;
         if ($ol_stack[-1]{open_li}) {
             push @out, "</li>";
@@ -1613,17 +1632,48 @@ sub md_to_html {
         }
     };
 
+    my $close_open_ul_li = sub {
+        return unless @ul_stack;
+        if ($ul_stack[-1]{open_li}) {
+            push @out, "</li>";
+            $ul_stack[-1]{open_li} = 0;
+        }
+    };
+
     my $close_ols_to_indent = sub {
         my ($target_indent) = @_; # close while current indent > target_indent
         while (@ol_stack && $ol_stack[-1]{indent} > $target_indent) {
-            $close_open_li->();
+            $close_open_ol_li->();
             push @out, "</ol>";
             pop @ol_stack;
         }
     };
 
-    my $close_all_ols = sub {
-        $close_ols_to_indent->(-1);
+    my $close_uls_to_indent = sub {
+        my ($target_indent) = @_; # close while current indent > target_indent
+        while (@ul_stack && $ul_stack[-1]{indent} > $target_indent) {
+            $close_open_ul_li->();
+            push @out, "</ul>";
+            pop @ul_stack;
+        }
+    };
+
+    my $close_all_lists = sub {
+        # Close the deepest-first among both stacks.
+        while (@ol_stack || @ul_stack) {
+            my $ol_indent = @ol_stack ? $ol_stack[-1]{indent} : -1;
+            my $ul_indent = @ul_stack ? $ul_stack[-1]{indent} : -1;
+
+            if ($ol_indent >= $ul_indent) {
+                $close_open_ol_li->();
+                push @out, "</ol>";
+                pop @ol_stack;
+            } else {
+                $close_open_ul_li->();
+                push @out, "</ul>";
+                pop @ul_stack;
+            }
+        }
     };
 
     my $flush_para = sub {
@@ -1635,14 +1685,14 @@ sub md_to_html {
         # Blank line: ends paragraphs and lists
         if ($l =~ /^\s*$/) {
             $flush_para->();
-            $close_all_ols->();
+            $close_all_lists->();
             next;
         }
 
         # Horizontal rule (Markdown: ---)
         if ($l =~ /^\s*---\s*$/) {
             $flush_para->();
-            $close_all_ols->();
+            $close_all_lists->();
             push @out, "<hr>";
             next;
         }
@@ -1653,7 +1703,7 @@ sub md_to_html {
             my $text  = $2;
             $text =~ s/\s+#+\s*$//;  # allow optional closing #'s
             $flush_para->();
-            $close_all_ols->();
+            $close_all_lists->();
             push @out, "<h$level>" . md_inline($text) . "</h$level>";
             next;
         }
@@ -1661,34 +1711,68 @@ sub md_to_html {
         # Blockquote
         if ($l =~ /^>\s?(.*)$/) {
             $flush_para->();
-            $close_all_ols->();
+            $close_all_lists->();
             push @out, "<blockquote><p>" . md_inline($1) . "</p></blockquote>";
             next;
         }
 
+        # Unordered list item: e.g., "- Item" or "* Item"
+        # Supports nesting based on leading spaces.
+        if ($l =~ /^(\s*)[-\*]\s+(.*)$/) {
+            my $indent = length($1 // "");
+            my $text   = $2;
+
+            $flush_para->();
+
+            # If we were in an ordered list, close it before starting/continuing a UL.
+            $close_all_lists->() if @ol_stack;
+
+            # Close UL levels if indentation decreased
+            my $current_indent = @ul_stack ? $ul_stack[-1]{indent} : -1;
+            if (@ul_stack && $indent < $current_indent) {
+                $close_uls_to_indent->($indent);
+            }
+
+            # If starting a new (possibly nested) UL
+            $current_indent = @ul_stack ? $ul_stack[-1]{indent} : -1;
+            if (!@ul_stack || $indent > $current_indent) {
+                push @out, "<ul>";
+                push @ul_stack, { indent => $indent, open_li => 0 };
+            } else {
+                # Same UL level: close previous <li> if still open
+                $close_open_ul_li->();
+            }
+
+            push @out, "<li>" . md_inline($text);
+            $ul_stack[-1]{open_li} = 1;
+            next;
+        }
+
         # Ordered list item: e.g., "1. Item"
-        # Supports nesting based on leading spaces (2+ spaces deeper than parent).
+        # Supports nesting based on leading spaces.
         if ($l =~ /^(\s*)(\d+)\.\s+(.*)$/) {
             my $indent = length($1 // "");
             my $text   = $3;
 
             $flush_para->();
 
-            # Close lists if indentation decreased
+            # If we were in an unordered list, close it before starting/continuing an OL.
+            $close_all_lists->() if @ul_stack;
+
+            # Close OL levels if indentation decreased
             my $current_indent = @ol_stack ? $ol_stack[-1]{indent} : -1;
             if (@ol_stack && $indent < $current_indent) {
                 $close_ols_to_indent->($indent);
             }
 
-            # If starting a new (possibly nested) list
+            # If starting a new (possibly nested) OL
             $current_indent = @ol_stack ? $ol_stack[-1]{indent} : -1;
             if (!@ol_stack || $indent > $current_indent) {
-                # If nesting under an existing <li>, keep it open; otherwise ok.
                 push @out, "<ol>";
                 push @ol_stack, { indent => $indent, open_li => 0 };
             } else {
-                # Same list level: close previous <li> if still open
-                $close_open_li->();
+                # Same OL level: close previous <li> if still open
+                $close_open_ol_li->();
             }
 
             push @out, "<li>" . md_inline($text);
@@ -1697,15 +1781,14 @@ sub md_to_html {
         }
 
         # Any other line: treat as paragraph text (and end any active list)
-        $close_all_ols->();
+        $close_all_lists->();
         push @para, $l;
     }
 
     $flush_para->();
-    $close_all_ols->();
+    $close_all_lists->();
     return join "\n", @out;
-}
-sub md_inline {
+}sub md_inline {
     my ($t) = @_;
     $t =~ s/&/&amp;/g;
     $t =~ s/</&lt;/g;

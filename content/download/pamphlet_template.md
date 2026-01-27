@@ -25,6 +25,10 @@ title: The Federalist No. 1
 # Use only lowercase letters and dashes.
 # For example: "We Need More Vegetables" -> we-need-more-vegetables.md 
 
+# Optional subtitle of the pamphlet.
+# This is the human-readable subtitle shown to readers.
+subtitle: Your Subtitle Goes Here
+
 # Author namespace. Do not change or delete.
 author_namespace: github
 

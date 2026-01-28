@@ -828,20 +828,21 @@ sub emit_root_index {
         my $count = $domain_counts{$label} // 0;
         my $href  = "/domains/" . slugify($label) . ".html";
 
-        my $count_display = ($count == 0)
-          ? qq{<span class="toc-zero" aria-label="none">&mdash;</span>}
-          : $count;
+        # Home page directive:
+        # - When count > 0: "Label — Count" (ensure the dash is visibly rendered)
+        # - When count == 0: show just the label
+        # NEW DIRECTIVE: only the label should be a link (not the mdash or count)
+        my $label_link = qq{              <a class="toc-link" href="$href"><span class="toc-label">$label</span></a>};
 
-        my $row_inner = qq{              <span class="toc-label">$label</span>
-              <span class="toc-leader" aria-hidden="true"></span>
-              <span class="toc-count">$count_display</span>};
-
-        # Always link domains on the homepage, even when the count is 0.
-        my $link = qq{            <a class="toc-link" href="$href">$row_inner</a>};
+        my $tail = ($count == 0)
+          ? qq{}
+          : qq{
+              <span class="toc-sep" aria-hidden="true">&mdash;</span>
+              <span class="toc-count">$count</span>};
 
         qq{        <tr class="toc-item">
           <td class="toc-cell">
-$link
+$label_link$tail
           </td>
         </tr>};
     } @domains_to_show;
@@ -885,21 +886,21 @@ $domains_right
         my $count = $era_counts{$label} // 0;
         my $href  = "/eras/" . slugify($label) . ".html";
 
-        my $count_display = ($count == 0)
-          ? qq{<span class="toc-zero" aria-label="none">&mdash;</span>}
-          : $count;
+        # Home page directive (applied to Eras as well):
+        # - When count > 0: "Label — Count" (dash visible)
+        # - When count == 0: show just the label
+        # - Only the label should be a link (not the mdash or count)
+        my $label_link = qq{              <a class="toc-link" href="$href"><span class="toc-label">$label</span></a>};
 
-        my $row_inner = qq{              <span class="toc-label">$label</span>
-              <span class="toc-leader" aria-hidden="true"></span>
-              <span class="toc-count">$count_display</span>};
-
-        my $link_or_text = ($count > 0)
-          ? qq{            <a class="toc-link" href="$href">$row_inner</a>}
-          : qq{            <div class="toc-link is-disabled" aria-disabled="true">$row_inner</div>};
+        my $tail = ($count == 0)
+          ? qq{}
+          : qq{
+              <span class="toc-sep" aria-hidden="true">&mdash;</span>
+              <span class="toc-count">$count</span>};
 
         qq{        <tr class="toc-item">
           <td class="toc-cell">
-$link_or_text
+$label_link$tail
           </td>
         </tr>};
     } @eras_to_show;
@@ -922,48 +923,51 @@ $eras_right
     my $unique_authors  = scalar(keys %by_author);
     my $unique_subjects = scalar(keys %by_subject);
 
-    my $authors_count_display  = ($unique_authors == 0)
-      ? qq{<span class="toc-zero" aria-label="none">&mdash;</span>}
-      : $unique_authors;
-
-    my $subjects_count_display = ($unique_subjects == 0)
-      ? qq{<span class="toc-zero" aria-label="none">&mdash;</span>}
-      : $unique_subjects;
-
     my @other_rows;
 
     {
-        my $row_inner = qq{              <span class="toc-label">Authors</span>
-              <span class="toc-leader" aria-hidden="true"></span>
-              <span class="toc-count">$authors_count_display</span>};
+        my $label = "Authors";
+        my $count = $unique_authors // 0;
+        my $href  = "/authors/";
 
-        my $link_or_text = ($unique_authors > 0)
-          ? qq{            <a class="toc-link" href="/authors/">$row_inner</a>}
-          : qq{            <div class="toc-link is-disabled" aria-disabled="true">$row_inner</div>};
+        # Home page directive (applied to Other Ways to Browse as well):
+        # - When count > 0: "Label — Count" (dash visible)
+        # - When count == 0: show just the label
+        # - Only the label should be a link (not the mdash or count)
+        my $label_link = qq{              <a class="toc-link" href="$href"><span class="toc-label">$label</span></a>};
+
+        my $tail = ($count == 0)
+          ? qq{}
+          : qq{
+              <span class="toc-sep" aria-hidden="true">&mdash;</span>
+              <span class="toc-count">$count</span>};
 
         push @other_rows, qq{        <tr class="toc-item">
           <td class="toc-cell">
-$link_or_text
+$label_link$tail
           </td>
         </tr>};
     }
 
     {
-        my $row_inner = qq{              <span class="toc-label">Subjects</span>
-              <span class="toc-leader" aria-hidden="true"></span>
-              <span class="toc-count">$subjects_count_display</span>};
+        my $label = "Subjects";
+        my $count = $unique_subjects // 0;
+        my $href  = "/subjects/";
 
-        my $link_or_text = ($unique_subjects > 0)
-          ? qq{            <a class="toc-link" href="/subjects/">$row_inner</a>}
-          : qq{            <div class="toc-link is-disabled" aria-disabled="true">$row_inner</div>};
+        my $label_link = qq{              <a class="toc-link" href="$href"><span class="toc-label">$label</span></a>};
+
+        my $tail = ($count == 0)
+          ? qq{}
+          : qq{
+              <span class="toc-sep" aria-hidden="true">&mdash;</span>
+              <span class="toc-count">$count</span>};
 
         push @other_rows, qq{        <tr class="toc-item">
           <td class="toc-cell">
-$link_or_text
+$label_link$tail
           </td>
         </tr>};
     }
-
     my $other_half = int((scalar(@other_rows) + 1) / 2);
     my $other_left  = join "\n", @other_rows[0 .. ($other_half - 1)];
     my $other_right = join "\n", @other_rows[$other_half .. $#other_rows];

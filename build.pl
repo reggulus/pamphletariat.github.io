@@ -989,7 +989,7 @@ $other_right
 </section>
 
 
-    <div class="toc-divider"></div>
+    <hr>
 
     <div class="browse-grid">
       <nav class="toc">
@@ -1012,7 +1012,7 @@ $other_toc
   </section>
 
 
-      <div class="toc-divider"></div>
+      <hr>
 
     <h2>Latest Additions</h2>
 

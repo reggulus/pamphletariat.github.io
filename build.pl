@@ -719,13 +719,24 @@ sub format_month_year {
 }
 
 sub render_pamphlet_list_row {
-    my ($p, $count_text) = @_;
+    my ($p, $count_text, %opts) = @_;
+
+    # Optional: identify the page currently being built so we can avoid confusing self-links.
+    # Example: when rendering an author page, don't link the author name to the same author page.
+    my $current_page = $opts{current_page} // ""; # e.g. "/authors/<slug>.html"
 
     my $title  = html_escape($p->{title}  // "");
     my $href   = $p->{url} // "#";
+
     my $author_text = html_escape($p->{author} // "");
-    my $author_href = html_escape(author_page_href($p));
-    my $author = qq{<a class="author-link" href="$author_href">$author_text</a>};
+    my $author_page = author_page_href($p);
+    my $author;
+    if (defined($current_page) && $current_page ne "" && $current_page eq $author_page) {
+        $author = '';  # no need to list author again
+    } else {
+        my $author_href = html_escape($author_page);
+        $author = qq{<a class="author-link" href="$author_href">$author_text</a> · };
+    }
 
     my $when   = html_escape(format_month_year($p->{date}, ($p->{year} // "")));
 
@@ -736,7 +747,7 @@ sub render_pamphlet_list_row {
           <td class="toc-cell pamphlet-list-cell">
             <a class="pamphlet-list-link" href="$href">
               <span class="pamphlet-list-title">$title</span>
-              <span class="pamphlet-list-meta">$author · $when</span>
+              <span class="pamphlet-list-meta">$author$when</span>
             </a>
           </td>
         </tr>};
@@ -1141,11 +1152,13 @@ sub emit_index_group {
                 $page_label = ucfirst($name) . ": $k";
                 $page_title = $page_label;
             }
+            my $current_page = "/authors/$slug.html";
             $inner = render_index_page(
                 $page_label,
                 $items,
-                feed_base  => $base,
-                feed_label => $page_label,
+                feed_base     => $base,
+                feed_label    => $page_label,
+                current_page  => $current_page,
             );
 
             write_file(
@@ -1431,6 +1444,9 @@ sub render_index_page {
     my $feed_base  = $opts{feed_base}  // ""; # e.g. "/subjects/foo" (without extension)
     my $feed_label = $opts{feed_label} // $label;
 
+    # Optional: identify the page currently being built so list rows can avoid self-links.
+    my $current_page = $opts{current_page} // ""; # e.g. "/authors/<slug>.html"
+
     my $feeds = "";
     if ($feed_base) {
         my $rss  = html_escape($feed_base . ".xml");
@@ -1449,7 +1465,7 @@ sub render_index_page {
 
     my @rows = map {
         my $year = html_escape($_->{year} // "");
-        render_pamphlet_list_row($_, $year);
+        render_pamphlet_list_row($_, $year, current_page => $current_page);
     } @$items;
 
     my $half = int((scalar(@rows) + 1) / 2);
@@ -1473,7 +1489,6 @@ $right
 </div>
 };
 }
-
 sub html_escape {
     my ($s) = @_;
     $s //= "";

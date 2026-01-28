@@ -678,7 +678,9 @@ sub parse_pamphlet {
         body => md_to_html($body),
         url  => "/pamphlets/$file_slug.html",
     };
-}sub safe_year {
+}
+
+sub safe_year {
     my ($y) = @_;
     return ($y && $y =~ /^\d{4}$/) ? $y : 0;
 }
@@ -715,6 +717,7 @@ sub format_month_year {
 
     return (defined $fallback_year && $fallback_year ne "") ? $fallback_year : "";
 }
+
 sub render_pamphlet_list_row {
     my ($p, $count_text) = @_;
 
@@ -1419,7 +1422,9 @@ $right
   </table>
 </div>
 };
-}sub render_index_page {
+}
+
+sub render_index_page {
     my ($label, $items, %opts) = @_;
 
     # Optional feed metadata
@@ -1467,7 +1472,9 @@ $right
   </table>
 </div>
 };
-}sub html_escape {
+}
+
+sub html_escape {
     my ($s) = @_;
     $s //= "";
     $s =~ s/&/&amp;/g;

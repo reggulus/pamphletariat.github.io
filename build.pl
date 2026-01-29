@@ -1189,7 +1189,7 @@ sub render_pamphlet {
 
     my $author_text = html_escape($p->{author} // "");
     my $author_href = html_escape(author_page_href($p));
-    my $author_html = qq{<a class="author-link" href="$author_href">$author_text</a>};
+    my $author_html = qq{By <a class="author-link" href="$author_href">$author_text</a>};
 
     # Pamphlet header should show a human-readable date.
     my $when = html_escape(format_month_year($p->{date}, ($p->{year} // "")));
@@ -1232,9 +1232,8 @@ sub render_pamphlet {
     if (@header_bits) {
         $header_meta_html = qq{\n  <p class="meta meta-header"><span class="meta-field">}
           . join(" &middot; ", @header_bits)
-          . qq{</span></p>\n  <hr>};
+          . qq{</span></p>};
     }
-
     # Source (display verbatim)
     # NEW DIRECTIVE: pamphlet source should just say "Source:"
     # and it should draw above the reading level.

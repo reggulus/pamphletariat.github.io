@@ -47,10 +47,10 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0f0f0f;
-    --fg: #e6e6e6;
-    --fg-muted: #aaaaaa;
-    --fg-faint: #999999;
+      --bg: #0f0f0f;
+      --fg:        #e8e6e3;  /* primary ink */
+      --fg-muted:  #cfcac4;  /* secondary ink */
+      --fg-faint:  #a9a39b;  /* tertiary ink */
 
     --link: #9cf;
     --link-visited: #dcf;
@@ -314,26 +314,40 @@ h2.home-subtitle {
   font-style: italic;
   font-weight: 400;
 }
-/* Pamphlet subtitle + metadata are quiet/compact. */
+/* Pamphlet title/subtitle/orientation/metadata color rules */
+article.pamphlet h1 {
+  color: var(--fg);
+}
+
+/* Pamphlet subtitle should use normal foreground (not muted). */
 .pamphlet-subtitle {
   font-family: "WarblerDeck", Georgia, "Times New Roman", Times, serif;
   font-weight: 400;
   margin-top: 0.25rem;
-  color: var(--fg-muted);
+  color: var(--fg);
 }
 
+/* Default pamphlet metadata should be faint.
+   NEW DIRECTIVE: all metadata should be in Atkinson. */
 .meta {
   margin: 0.35rem 0;
-  color: var(--fg-muted);
-  font-size: 1rem;
+  color: var(--fg-faint);
   line-height: 1.45;
+  font-family: "Atkinson Hyperlegible Next",
+               system-ui, -apple-system, BlinkMacSystemFont,
+               "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
 }
 
-.meta a {
-  color: inherit;
-}
-
-.meta a {
+/* Orientation should be muted (slightly stronger than other metadata)
+   and set to 1.1x the pamphlet/body text size.
+   Line-height should be 1.1x the pamphlet body line-height.
+   (Body is 1.7, so 1.7 * 1.1 = 1.87.) */
+.meta.meta-orientation {
+  color: var(--fg-muted);
+  font-size: 1.1em;
+  line-height: 1.87;
+}.meta a {
   color: inherit;
 }
 

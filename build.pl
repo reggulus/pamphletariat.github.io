@@ -747,8 +747,8 @@ sub render_pamphlet_list_row {
     # NEW DIRECTIVE: the " by " is not part of the title link.
     my $by = ($author ne "") ? qq{<span class="pamphlet-list-by" aria-hidden="true"> by </span>} : "";
 
-    my $meta = ($author ne "") ? qq{<span class="pamphlet-list-meta">$by$author &middot; $when</span>}
-                                : qq{<span class="pamphlet-list-meta">$when</span>};
+    my $meta = ($author ne "") ? qq{<span class="pamphlet-list-meta" style="color: var(--fg-muted);">$by$author &middot; $when</span>}
+                                : qq{<span class="pamphlet-list-meta" style="color: var(--fg-muted);">$when</span>};
 
     return qq{        <tr class="toc-item pamphlet-list-item">
           <td class="toc-cell pamphlet-list-cell">
@@ -1001,18 +1001,18 @@ $other_right
 
     <div class="browse-grid">
       <nav class="toc">
-        <h3 class="toc-heading">Domains</h3>
+        <h2 class="toc-heading">Domains</h2>
 $domains_toc
       </nav>
 
       <nav class="toc">
-        <h3 class="toc-heading">Eras</h3>
+        <h2 class="toc-heading">Eras</h2>
 $eras_toc
       </nav>
 
 
       <nav class="toc">
-        <h3 class="toc-heading">Other Ways to Browse</h3>
+        <h2 class="toc-heading">Other Ways to Browse</h2>
 $other_toc
       </nav>
 

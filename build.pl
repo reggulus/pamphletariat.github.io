@@ -735,7 +735,7 @@ sub render_pamphlet_list_row {
         $author = '';  # no need to list author again
     } else {
         my $author_href = html_escape($author_page);
-        $author = qq{<a class="author-link" href="$author_href">$author_text</a> · };
+        $author = qq{<a class="author-link" href="$author_href">$author_text</a>};
     }
 
     my $when   = html_escape(format_month_year($p->{date}, ($p->{year} // "")));
@@ -743,16 +743,20 @@ sub render_pamphlet_list_row {
     # Note: $count_text is intentionally ignored for pamphlet lists.
     # Pamphlet lists are rendered with their own simpler styling (not TOC leaders/counts).
 
+    # USER REQUEST: when printing a pamphlet list, between the title and the author put " by " in WarblerDeck italic of the same font size.
+    # NEW DIRECTIVE: the " by " is not part of the title link.
+    my $by = ($author ne "") ? qq{<span class="pamphlet-list-by" aria-hidden="true"> by </span>} : "";
+
+    my $meta = ($author ne "") ? qq{<span class="pamphlet-list-meta">$by$author &middot; $when</span>}
+                                : qq{<span class="pamphlet-list-meta">$when</span>};
+
     return qq{        <tr class="toc-item pamphlet-list-item">
           <td class="toc-cell pamphlet-list-cell">
-            <a class="pamphlet-list-link" href="$href">
-              <span class="pamphlet-list-title">$title</span>
-              <span class="pamphlet-list-meta">$author$when</span>
-            </a>
+            <a class="pamphlet-list-link" href="$href"><span class="pamphlet-list-title">$title</span></a>
+            $meta
           </td>
         </tr>};
-}
-sub era_for_year {
+}sub era_for_year {
     my ($y) = @_;
     return "" unless $y =~ /^\d{4}$/;
     return "18th-Century" if $y < 1800;
@@ -1674,10 +1678,10 @@ sub wrap_layout {
 
     my $footer = qq{
 <footer class="site-footer">
+  <hr>
   @{[ render_site_nav() ]}
 </footer>
 };
-
     return qq{
 <!DOCTYPE html>
 <html lang="en">

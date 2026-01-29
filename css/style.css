@@ -249,13 +249,14 @@ ol > li::marker {
   color: var(--fg);
 }
 .site-caveat {
+  font-family: "WarblerDeck", Georgia, "Times New Roman", Times, serif;
   font-style: italic;
+  font-weight: 400;
   color: var(--fg-faint);
   font-size: 0.95rem;
   letter-spacing: 0.02em;
   white-space: nowrap;
 }
-
 /* =========================================================
    3) FOOTER (DESIGN.md)
    ========================================================= */
@@ -330,4 +331,16 @@ h2.home-subtitle {
 
 .meta a {
   color: inherit;
+}
+
+.meta a {
+  color: inherit;
+}
+
+/* Pamphlet list: render the " by " separator in WarblerDeck italic (same size as meta). */
+.pamphlet-list-by {
+  font-family: "WarblerDeck", Georgia, "Times New Roman", Times, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: inherit;
 }

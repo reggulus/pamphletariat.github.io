@@ -36,13 +36,16 @@
   --fg: #111111;
 
   /* Light theme: increase contrast for TOC leaders/counts and other secondary text */
-  --fg-muted: #333333;
+  /* NEW DIRECTIVE: the whole hr needs to be ~20% darker in light mode.
+     The decorative <hr> uses --fg-muted and --border-soft, so darken --fg-muted accordingly. */
+  --fg-muted: #292929;
   --fg-faint: #444444;
 
   --link: #0645ad;
   --link-visited: #0b0080;
 
-  --border-soft: #cccccc;
+  /* Light mode: keep secondary rules aligned with the same ink as the top rule (now darker). */
+  --border-soft: var(--fg-muted);
   --code-bg: #f4f4f4;
 }
 @media (prefers-color-scheme: dark) {

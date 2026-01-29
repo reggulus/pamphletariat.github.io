@@ -748,8 +748,7 @@ sub render_pamphlet_list_row {
     my $by = ($author ne "") ? qq{<span class="pamphlet-list-by" aria-hidden="true"> by </span>} : "";
 
     my $meta = ($author ne "") ? qq{<span class="pamphlet-list-meta" style="color: var(--fg-muted);">$by$author &middot; $when</span>}
-                                : qq{<span class="pamphlet-list-meta" style="color: var(--fg-muted);">$when</span>};
-
+                                : qq{<span class="pamphlet-list-meta" style="color: var(--fg-muted);">&middot; $when</span>};
     return qq{        <tr class="toc-item pamphlet-list-item">
           <td class="toc-cell pamphlet-list-cell">
             <a class="pamphlet-list-link" href="$href"><span class="pamphlet-list-title">$title</span></a>
@@ -1149,11 +1148,8 @@ sub emit_index_group {
                 my ($ns, $nm) = author_id_parts($k);
                 my $needs_disambiguation = (($count{$nm} // 0) > 1) ? 1 : 0;
 
-                my $count_total = scalar(@{ $items || [] });
                 $page_label = "Pamphlets by $nm";
                 $page_label .= " ($ns)" if $needs_disambiguation && defined($ns) && $ns ne "";
-                $page_label .= " — $count_total";
-
                 # Keep the browser/tab title aligned with what users see on the page.
                 $page_title = $page_label;
             } else {
@@ -1415,11 +1411,10 @@ $p->{body}
 
         qq{        <tr class="toc-item">
           <td class="toc-cell">
-            <a class="toc-link" href="$href">
-              <span class="toc-label">$label</span>
-              <span class="toc-leader" aria-hidden="true"></span>
-              <span class="toc-count">$count_display</span>
-            </a>
+            <a class="toc-link" href="$href"><span class="toc-label">$label</span></a>
+            <span class="toc-leader" aria-hidden="true"></span>
+            <span class="toc-sep" aria-hidden="true">&mdash;</span>
+            <span class="toc-count">$count_display</span>
           </td>
         </tr>};
     } @$keys;
@@ -1588,17 +1583,22 @@ $recent_right
           ? qq{<span class="toc-zero" aria-label="none">&mdash;</span>}
           : $count;
 
-        my $row_inner = qq{              <span class="toc-label">} . html_escape($label) . qq{</span>
-              <span class="toc-leader" aria-hidden="true"></span>
-              <span class="toc-count">$count_display</span>};
+        # New directive: the em dash + count are not part of the link.
+        # Keep label clickable when count > 0; render mdash/count outside the link.
+        my $label_html = qq{<span class="toc-label">} . html_escape($label) . qq{</span>};
 
-        my $link_or_text = ($count > 0)
-          ? qq{            <a class="toc-link" href="$href">$row_inner</a>}
-          : qq{            <div class="toc-link is-disabled" aria-disabled="true">$row_inner</div>};
+        my $label_part = ($count > 0)
+          ? qq{            <a class="toc-link" href="$href">$label_html</a>}
+          : qq{            <span class="toc-link is-disabled" aria-disabled="true">$label_html</span>};
+
+        my $tail = qq{
+            <span class="toc-leader" aria-hidden="true"></span>
+            <span class="toc-sep" aria-hidden="true">&mdash;</span>
+            <span class="toc-count">$count_display</span>};
 
         qq{        <tr class="toc-item">
           <td class="toc-cell">
-$link_or_text
+$label_part$tail
           </td>
         </tr>};
     } @subjects;
@@ -1625,15 +1625,13 @@ $sub_right
     my $desc_html = ($desc ne "") ? ("  <p class=\"domain-desc\">" . html_escape($desc) . "</p>\n") : "";
 
     return qq{
-
-  <h1>} . html_escape($domain_label) . qq{ &mdash; $count_total</h1>
+  <h1>} . html_escape($domain_label) . (($count_total && $count_total > 0) ? qq{ &mdash; $count_total} : qq{}) . qq{</h1>
 $desc_html  <p class="feed-links"><a href="$rss">RSS</a> · <a href="$atom">Atom</a></p>
 <hr>
 <section>
   <h2>Latest Additions</h2>
   $pamphlets_toc
 </section>
-
 <hr>
 
 
